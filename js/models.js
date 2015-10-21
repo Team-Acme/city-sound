@@ -1,14 +1,29 @@
-var BFHVModels = (function() {
-  // var UserModel = Backbone.Model.extend({
-  //   defaults:{
-  //     paswword:'',
-  //     user:''
-  //   }
-  // });
+console.log("models.js is loading");
 
+var UserModel = Backbone.Model.extend({
+  defaults: {
+    username:'',
+    playlistCreated: [],
+  },
+    addUser : function (str) {
+      this.set("username", str);
+  }
+});
 
-// return {
-//     UserModel: UserModel
-// };
+var PlaylistModel = Backbone.Model.extend({
+  defaults: {
+    playListName:'',
+  },
 
-})();
+  newTask : function (playListName) {
+    this.set("playListName", playListName);
+  }
+});
+
+var UserCollection = Backbone.Collection.extend({
+  model : UserModel
+});
+
+var PlaylistCollection = Backbone.Collection.extend({
+  model : PlaylistModel
+});
