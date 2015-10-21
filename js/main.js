@@ -1,15 +1,23 @@
-console.log("main js is being called");
+console.log("main.js is loading");
 
-var BFH= {
-  // Models: BFHModels,
-  Views: BFHViews
-};
+var app = {};
 
-$(function() {
+$(function() { //when DOM is ready...
+	app.users = new UserCollection([
+		{username:'Anastasia'},
+    {username:'Chad'},
+		{username:'Molly'},
+		{username:'Elizabeth'}
 
-  BFH.UserView = new BFH.UserView();
-  $('#app').append(BFH.UserView.render().$el);
+	]);
 
-$('#user-view').append(BFH.UserView.render().$el);
+	app.tasks = new PlaylistCollection([
+      {playlistName: 'Chicago'
 
+      },
+	]);
+
+	app.gui = new GUI(app.users,
+						app.tasks,
+						'#app');// selector of main div
 });
