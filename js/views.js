@@ -39,6 +39,7 @@ var GUI = (function() { //IIFE for all Views
       var savePlaylist = '<button id="savePlaylist">Save Playlist</button>';
       var closeDiv = '</div>';
       this.$el.html(namePlaylistContainer  + "<div>" + playlistName + "</div><div>" + savePlaylist + "</div>" + closeDiv);
+      return this;
     },
 
     events: {
@@ -113,7 +114,7 @@ var GUI = (function() { //IIFE for all Views
 
     events: {
       "click #logout": "logout",
-      "click #createTask": "createPlaylist"
+      "click #save": "createPlaylist"
     },
 
     initialize: function() {
@@ -122,10 +123,11 @@ var GUI = (function() { //IIFE for all Views
 
     logout: function() {
       console.log('click heard on logout button');
-      var newCreateTracks = new CreateTracks();
-      newCreateTracks.render();
-      $("#app").empty();
-      $("#app").append(CreateTracks.$el);
+      // var newCreateTracks = new CreateTracks();
+      // newCreateTracks.render();
+      // $("#app").empty();
+      // $("#app").append(CreateTracks.$el);
+      window.location = 'file:///Users/airHome/Desktop/city-sound/test.html';
     }, 
 
     createPlaylist: function() {
@@ -167,17 +169,15 @@ var GUI = (function() { //IIFE for all Views
 
     appAppear: function() {
       var user = $("#saveCity").val();
-      app.currentUser = user;
+      app.currentUser = user; 
       var userModel = app.users.findWhere({
         username: user
       });
-
       var newUserView = new UserView({
         model: userModel
       });
       var newSoundCloudView = new SoundCloudView();
       var newNamedPlaylistsView = new NamedPlaylistsView();
-
       newUserView.render(user);
       newSoundCloudView.render();
       newNamedPlaylistsView.render();
