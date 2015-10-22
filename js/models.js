@@ -21,6 +21,7 @@ var PlaylistModel = Backbone.Model.extend({
   }
 });
 
+
 var UserCollection = Backbone.Collection.extend({
   model : UserModel
 });
