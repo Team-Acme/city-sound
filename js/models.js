@@ -1,3 +1,4 @@
+
 console.log("models.js is loading");
 
 var UserModel = Backbone.Model.extend({
@@ -15,7 +16,7 @@ var PlaylistModel = Backbone.Model.extend({
     playListName:'',
   },
 
-  newTask : function (playListName) {
+  newList : function (playListName) {
     this.set("playListName", playListName);
   }
 });

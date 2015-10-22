@@ -5,7 +5,7 @@ var app = {};
 $(function() { //when DOM is ready...
 	app.users = new UserCollection([
 		{username:'Anastasia'},
-    {username:'Chad'},
+        {username:'Chad'},
 		{username:'Molly'},
 		{username:'Elizabeth'}
 
