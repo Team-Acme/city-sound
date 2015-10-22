@@ -5,7 +5,7 @@ var app = {};
 $(function() { //when DOM is ready...
 	app.users = new UserCollection([
 		{username:'Anastasia'},
-    {username:'Chad'},
+        {username:'Chad'},
 		{username:'Molly'},
 		{username:'Elizabeth'}
 
@@ -18,6 +18,6 @@ $(function() { //when DOM is ready...
 	]);
 
 	app.gui = new GUI(app.users,
-						app.tasks,
-						'#app');// selector of main div
+	app.tasks,
+	'#app');// selector of main div
 });

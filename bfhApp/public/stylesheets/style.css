@@ -6,23 +6,3 @@ body {
 a {
   color: #00B7FF;
 }
-
-#user-view{
-background-color: white;
-border-radius: 1em;
-width: 40%;
-min-height: 200px;
-margin-left: 2%;
-margin-right: 5%;
-margin-bottom: 5%;
-padding: 10px;
-float: left;
-display: inline;
-}
-
-#Logout {
-  background-color: #ee2818;
-  border-radius: .5em;
-  margin-top: 1em;
-  float: right;
-}

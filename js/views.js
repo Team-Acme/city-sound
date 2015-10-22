@@ -23,6 +23,7 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
+
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR CreatePlaylistView:
@@ -122,10 +123,12 @@ var GUI = (function() { //IIFE for all Views
 
     logout: function() {
       console.log('click heard on logout button');
-      var newCreateTracks = new CreateTracks();
-      newCreateTracks.render();
-      $("#app").empty();
-      $("#app").append(CreateTracks.$el);
+      // var newCreateTracks = new CreateTracks();
+      // newCreateTracks.render();
+      // $("#app").empty();
+      // $("#app").append(CreateTracks.$el);
+      window.onload = 'file:///Users/airHome/Desktop/city-sound/test.html';
+
     }, 
 
     createPlaylist: function() {
