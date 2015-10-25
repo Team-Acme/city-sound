@@ -97,7 +97,25 @@ body {
   margin: 10px 0px;
   padding: 10px 10px;
  overflow:auto;
-  background-color: #ccff99;
+  background-color: black;
+  border: solid 2px black;
+}
+
+#createSaveLoginViewContainer {
+  width: 225px;
+  min-height: 150px;
+  height: auto;
+  margin: 10px 0px;
+  padding: 10px 10px;
+  border: solid 2px black;
+}
+
+#newAcctContainer {
+  width: 225px;
+  min-height: 150px;
+  height: auto;
+  margin: 10px 0px;
+  padding: 10px 10px;
   border: solid 2px black;
 }
 
