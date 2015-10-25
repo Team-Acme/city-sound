@@ -1,4 +1,5 @@
 //GLOBAL VARIABLES FOR TESTING
+var Backbone = require('backbone');
 var WidgetView;
 var widget;
 var CreatePlaylistView;
@@ -29,10 +30,6 @@ var newUserView;
 var newSoundCloudView;
 var newNamedPlaylistsView;
 var firstView;
-
-module.exports = {
-  WidgetView: WidgetView
-}
 
 
 //STOP DELETING STUFF
@@ -238,3 +235,7 @@ var GUI = (function() { //IIFE for all Views
 
   return GUI;
 }());
+
+module.exports = {
+  WidgetView: WidgetView
+};
