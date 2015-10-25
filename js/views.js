@@ -26,30 +26,75 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-  //NOTES FOR CreatePlaylistView:
+  //NOTES FOR SaveLoginView:
   // -Creates a view that where you can name a playlist and login to the app
-  // -The "save" function will push the newly named list to the NamedPlaylistsView and allow users to login
+  // -The "addPlaylist" function will push the newly named list to the NamedPlaylistsView and allow users to login
+  //  it currently makes the #createSaveLoginViewContainer disappear when #saveLoginID is pushed
+  // -The "createAcct" function renders the CreateAcctView
 
   //////////////////////////////////////////////////////////////////////////////
 
-  var CreatePlaylistView = Backbone.View.extend({
+  var SaveLoginView = Backbone.View.extend({
+  render: function() {
+  var createSaveLoginViewContainer = '<div id="createSaveLoginViewContainer">';
+  var playlistTitle = '<input id= "playlistTitle" type="text" value="" />';
+  var userName = '<input id= "userName" type="text" value="" />';
+  var password = '<input id= "password" type="text" value="" />';
+  var saveLogin = '<button id="saveLoginID">Save / Login</button>';
+  var signUp = '<button id="signUpID">Sign Up</button>';
+  var closeDiv = '</div>';
+  this.$el.html(createSaveLoginViewContainer + "New Playlist" + "<div>" + playlistTitle + "</div>" +
+    "Username" + "<br><div>" + userName + "</div><div>" + "Password" + "<br><div>" + password + "</div><div>" + saveLogin + "</div>" + "</div><div>" + signUp + "</div>" + closeDiv);
+    return this;
+  },
 
-    render: function(user) {
-      var namePlaylistContainer = '<div id="namePlaylistContainer">';
-      var playlistName = '<input id= "playlistName" type="text" value="" />'; //text box
-      var savePlaylist = '<button id="savePlaylist">Save Playlist</button>';
-      var closeDiv = '</div>';
-      this.$el.html(namePlaylistContainer  + "<div>" + playlistName + "</div><div>" + savePlaylist + "</div>" + closeDiv);
-    },
+  events: {
+    'click #saveLoginID': 'addPlaylist',
+    'click #signUpID': 'createAcct'
+  },
 
-    events: {
-      "click #savePlaylist": "save",
-    },
+  addPlaylist: function() {
+   console.log("heard button Save / Login click");
+   $("#createSaveLoginViewContainer").remove();
+  },
 
-    save: function() {
-      console.log('click heard on saveTask button');
-      $("#CreatePlaylistView").remove();
+  createAcct: function() {
+   console.log("heard button Sign Up click");
+   var newCreateUser = new CreateAcctView();
+   this.$el.append(newCreateUser.render().$el);
+   $("#createSaveLoginViewContainer").remove();
+  }
+
+});
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  // NOTES FOR CreateAcctView
+  // -Holds container with username, password, and "Create Account" btn.
+  // -It currently makes #newAcctContainer disappear
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  var CreateAcctView = Backbone.View.extend({
+   render: function() {
+  var newAcct = '<div id="newAcctContainer">';
+  var newUsername = '<input id= "newUsernameID" type="text" value="" />';
+  var newpassword = '<input id= "newPasswordID" type="text" value="" />';
+  var saveNewUser = '<button id="saveUserID">Create Account</button>';
+  var closeDiv = '</div>';
+  this.$el.html(newAcct + "Username" + "<div>" + newUsername + "</div>" + "Password" + "<br><div>" + newpassword + "</div><div>" + "</div><div>"+ saveNewUser + "</div>" + "</div><div>" + closeDiv);
+    return this;
+  },
+
+  events: {
+    'click #saveUserID': 'addUser',
+  },
+
+  addUser: function() {
+   console.log("heard button new user save click");
+   $("#newAcctContainer").remove();
     }
+
   });
 
   //////////////////////////////////////////////////////////////////////////////
@@ -80,6 +125,7 @@ var GUI = (function() { //IIFE for all Views
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR NamedPlaylistsView:
+  // -Will hold the user named (URLs) playlists 
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -114,7 +160,7 @@ var GUI = (function() { //IIFE for all Views
 
     events: {
       "click #logout": "logout",
-      "click #createTask": "createPlaylist"
+      "click #save": "createPlaylist"
     },
 
     initialize: function() {
@@ -127,15 +173,15 @@ var GUI = (function() { //IIFE for all Views
       // newCreateTracks.render();
       // $("#app").empty();
       // $("#app").append(CreateTracks.$el);
-      window.onload = 'file:///Users/airHome/Desktop/city-sound/test.html';
+      // window.onload = 'file:///Users/airHome/Desktop/city-sound/test.html';
+      $("#userViewContainer").remove();
 
     }, 
 
     createPlaylist: function() {
-      console.log('click heard on createTask button');
-      var CreatePlaylistView = new CreatePlaylistView();
-      CreatePlaylistView.render();
-      $("#app").append(CreatePlaylistView.$el);
+      console.log('click heard on create Playlist button');
+        var newCreatePlaylist = new SaveLoginView();
+        this.$el.append(newCreatePlaylist.render().$el);
     }
   });
 
@@ -152,11 +198,7 @@ var GUI = (function() { //IIFE for all Views
     render: function() {
     var cityName = '<input type="text" id="post-title">';
     var saveCityBtn = '<button id="saveCity">Create</button>';
-    var classical = '<input type="checkbox" name="Classical" value="Classical"> Classical<br>';
-    var jazz = '<input type="checkbox" name="Jazz" value="Jazz"> Jazz<br>';
-    var rap = '<input type="checkbox" name="Rap" value="Rap"> Rap<br>';
-    var newAge = '<input type="checkbox" name="newAge" value="newAge"> New Age<br>';
-    this.$el.html('<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + jazz + classical  + rap  + newAge + '<b>' + saveCityBtn);
+    this.$el.html('<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
 
     },
 
@@ -192,7 +234,7 @@ var GUI = (function() { //IIFE for all Views
   });
 
   // generic ctor to represent interface:
-  function GUI(users, tasks, el) {
+  function GUI(users, playlistName, el) {
     var firstView = new CreateTracks();
     firstView.render();
     $("#app").append(firstView.$el);
