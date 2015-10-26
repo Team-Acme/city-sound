@@ -1,5 +1,5 @@
 //GLOBAL VARIABLES FOR TESTING
-var Backbone = require('backbone');
+var Backbone;
 var WidgetView;
 var widget;
 var CreatePlaylistView;
@@ -235,7 +235,3 @@ var GUI = (function() { //IIFE for all Views
 
   return GUI;
 }());
-
-module.exports = {
-  WidgetView: WidgetView
-};
