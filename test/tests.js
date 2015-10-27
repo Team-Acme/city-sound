@@ -14,5 +14,5 @@ describe('WidgetView', function() {
 describe('WidgetView', function(){
   it('should initialize method', function(){
     expect(widgetview).to.respondTo('initialize');
-  });
+  })
 });
