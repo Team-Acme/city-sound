@@ -4,47 +4,78 @@ SC.initialize({
     //redirect_uri: 'http://example.com/callback'
   });
 
-var track_url = 'http://soundcloud.com/haldymusic/sunglasses-and-suicide-doors';
-SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
-  console.log('oEmbed response: ', oEmbed);
+// get users from city entered
+// map returned users array to just array of user_id
+var usersIdOnly = [];
+var tracksList = [];
+var responsesNeeded = 0;
+
+function trackListBuilt() {
+  if (responsesNeeded <= 0) {
+    console.log('Track list is built');
+    console.log(tracksList);
+  };
+};
+
+function musicTracks(user) {
+  console.log('musicTracks has been called');
+  responsesNeeded++;
+  console.log(responsesNeeded);
+  SC.get('/tracks', {
+    user_id : user,
+    genres : 'alternative' || 'rock' || 'pop'
+  }).then(function(tracks) {
+    if (tracks.length !== 0) {
+      tracksList.push(tracks[0].id);
+    };
+    responsesNeeded--;
+    trackListBuilt();
+  }).fail(function() {
+    responsesNeeded--;
+    trackListBuilt()
+  });
+};
+
+SC.get('/users', {
+  q: 'Portland', limit: 50
+}).then(function(users) {
+    console.log(users);
+    usersIdOnly = users.map(function(obj){
+      var rObj = {};
+      rObj.id = obj.id;
+      return rObj;
+    });
+    console.log(usersIdOnly);
+    for( i = 0; i < usersIdOnly.length; i++ ) {
+      musicTracks(usersIdOnly[i].id);
+      console.log(i);
+    };
+
 });
 
+// test if user_id has tracks in music genres (alternative, rock, pop)
+// if yes, get track from user and add track_id to tracks array
+// repeat until tracks.length = 10
 
-(function(){
-  var widgetIframe = document.getElementById('sc-widget'),
-      widget       = SC.Widget(widgetIframe),
-      newSoundUrl = '';
+// SC.get('/tracks', {
+//   user_id : usersIdOnly[i].id,
+//   genres : 'alternative' || 'rock' || 'pop'
+// }).then(function(tracks) {
+//   console.log(tracks);
+// });
 
-  widget.bind(SC.Widget.Events.READY, function() {
-    // load new widget
-    widget.bind(SC.Widget.Events.FINISH, function() {
-      widget.load(newSoundUrl, {
-        show_artwork: false
-      });
-    });
-  });
+// create playlist from tracks array
 
-}());
+// var tracks = [{id: 290}, {id: 291}, {id: 292}];
+//
+// SC.connect().then(function() {
+//   SC.post('/playlists', {
+//     playlist: { title: 'My Playlist', tracks: tracks }
+//   });
+// });
 
+// embed player in page using playlist
 
-(function(){
-  var widgetIframe = document.getElementById('sc-widget'),
-      widget       = SC.Widget(widgetIframe);
-
-  widget.bind(SC.Widget.Events.READY, function() {
-    widget.bind(SC.Widget.Events.PLAY, function() {
-      // get information about currently playing sound
-      widget.getCurrentSound(function(currentSound) {
-        console.log('sound ' + currentSound.get('') + 'began to play');
-      });
-    });
-    // get current level of volume
-    widget.getVolume(function(volume) {
-      console.log('current volume value is ' + volume);
-    });
-    // set new volume level
-    widget.setVolume(50);
-    // get the value of the current position
-  });
-
-}());
+// SC.oEmbed('http://soundcloud.com/forss/sets/soulhack', {
+//     element: document.getElementById('putTheWidgetHere')
+// });
