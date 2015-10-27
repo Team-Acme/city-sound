@@ -76,6 +76,6 @@ SC.get('/users', {
 
 // embed player in page using playlist
 
-// SC.oEmbed('http://soundcloud.com/forss/sets/soulhack', {
-//     element: document.getElementById('putTheWidgetHere')
-// });
+SC.oEmbed('http://soundcloud.com/tracks/90390073', {
+    element: document.getElementById('app')
+});
