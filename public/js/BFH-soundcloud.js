@@ -4,6 +4,8 @@ SC.initialize({
     //redirect_uri: 'http://example.com/callback'
   });
 
+
+
 // get users from city entered
 // map returned users array to just array of user_id
 var usersIdOnly = [];
@@ -14,30 +16,66 @@ function trackListBuilt() {
   if (responsesNeeded <= 0) {
     console.log('Track list is built');
     console.log(tracksList);
+    for (var i = 0; i < tracksList.length; i++) {
+      SC.stream('/tracks/' + tracksList[i]).then(function(player){
+        console.log('track playing: ' + tracksList[i]);
+        player.play();
+      });
+      // SC.oEmbed(tracksList[i], {
+      //     element: document.getElementById('app')
+      // });
+    }
   };
 };
 
 function musicTracks(user) {
   console.log('musicTracks has been called');
+  console.log(user);
   responsesNeeded++;
   console.log(responsesNeeded);
-  SC.get('/tracks', {
-    user_id : user,
-    genres : 'alternative' || 'rock' || 'pop'
-  }).then(function(tracks) {
+
+  SC.get('/users/' + user + '/tracks', {
+    //user_id : user,
+    //genres : 'alternative'
+
+  })
+  .then(function(tracks) {
+    console.log(tracks);
     if (tracks.length !== 0) {
       tracksList.push(tracks[0].id);
     };
     responsesNeeded--;
     trackListBuilt();
-  }).fail(function() {
-    responsesNeeded--;
-    trackListBuilt()
-  });
+  })
+  // .fail(function() {
+  //   responsesNeeded--;
+  //   trackListBuilt();
+  // });
+  // return;
 };
 
+// SC.get('/playlists', {
+//   q: 'Seattle local music', limit: 10
+// }).then(function(playlists) {
+//     console.log(playlists);
+//     playlistUri = playlists.map(function(obj){
+//       var rObj = {};
+//       rObj.uri = obj.uri;
+//       return rObj;
+//     });
+//     console.log(playlistsUri);
+//     // for(var i = 0; i < playlistsUri.length; i++ ) {
+//     //   console.log(i);
+//     //   musicTracks(usersIdOnly[i].id);
+//     //
+//     // };
+//
+// });
+
+
+
 SC.get('/users', {
-  q: 'Portland', limit: 50
+  q: 'Portland local music', limit: 50
 }).then(function(users) {
     console.log(users);
     usersIdOnly = users.map(function(obj){
@@ -46,23 +84,14 @@ SC.get('/users', {
       return rObj;
     });
     console.log(usersIdOnly);
-    for( i = 0; i < usersIdOnly.length; i++ ) {
-      musicTracks(usersIdOnly[i].id);
+    for(var i = 0; i < usersIdOnly.length; i++ ) {
       console.log(i);
+      musicTracks(usersIdOnly[i].id);
+
     };
 
 });
 
-// test if user_id has tracks in music genres (alternative, rock, pop)
-// if yes, get track from user and add track_id to tracks array
-// repeat until tracks.length = 10
-
-// SC.get('/tracks', {
-//   user_id : usersIdOnly[i].id,
-//   genres : 'alternative' || 'rock' || 'pop'
-// }).then(function(tracks) {
-//   console.log(tracks);
-// });
 
 // create playlist from tracks array
 
@@ -76,6 +105,6 @@ SC.get('/users', {
 
 // embed player in page using playlist
 
-SC.oEmbed('http://soundcloud.com/tracks/90390073', {
-    element: document.getElementById('app')
-});
+  // SC.oEmbed('http://soundcloud.com/tracks/90390073', {
+  //     element: document.getElementById('app')
+  // });
