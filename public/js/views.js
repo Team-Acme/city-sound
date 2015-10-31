@@ -2,6 +2,7 @@
 var Backbone;
 var WidgetView;
 var widget;
+var SaveLoginView;
 var CreatePlaylistView;
 var namePlaylistContainer;
 var playlistName;
@@ -68,7 +69,7 @@ var GUI = (function() { //IIFE for all Views
   // -The "createAcct" function renders the CreateAcctView
 
   //////////////////////////////////////////////////////////////////////////////
-  var SaveLoginView = Backbone.View.extend({
+  SaveLoginView = Backbone.View.extend({
   render: function() {
   var createSaveLoginViewContainer = '<div id="createSaveLoginViewContainer">';
   var playlistTitle = '<input id= "playlistTitle" type="text" value="" />';
