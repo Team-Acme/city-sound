@@ -15,8 +15,22 @@ describe('WidgetView', function() {
   });
 });
 
-describe('widget', function(){
-  it('should be a div', function(){
-    expect(widget).to.be.a('div');
+describe('SaveLoginView', function() {
+  var saveloginview;
+  before(function() {
+    saveloginview = new SaveLoginView();
+  });
+  it('should render method', function() {
+    expect(saveloginview).to.respondTo('render');
+  });
+});
+
+describe('addPlaylist', function(){
+  var addplaylist;
+  before(function() {
+  addplaylist = new addPlaylist();
+});
+  it('should print string', function() {
+    expect(addPlaylist).to.console.log();
   });
 });
