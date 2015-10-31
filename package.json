@@ -13,5 +13,10 @@
     "hbs": "~3.1.0",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "backbone": "~1.2.3",
+    "chai": "~3.4.0",
+    "mocha": "~2.3.3"
   }
 }
