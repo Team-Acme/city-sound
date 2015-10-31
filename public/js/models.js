@@ -14,6 +14,7 @@ var UserModel = Backbone.Model.extend({
 var PlaylistModel = Backbone.Model.extend({
   defaults: {
     playListName:'',
+    playListUser:'', //creates something that archives username
   },
 
   newList : function (playListName) {
