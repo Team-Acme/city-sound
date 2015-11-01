@@ -12,8 +12,6 @@ var LocalStrategy = require('passport-local');
 var TwitterStrategy = require('passport-twitter');
 var GoogleStrategy = require('passport-google');
 var FacebookStrategy = require('passport-facebook');
-
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -40,7 +38,6 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use('/', routes);
 app.use('/users', users);

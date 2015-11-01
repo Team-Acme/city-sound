@@ -5,6 +5,7 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
+var csrf = express.csrf();
 
 /////////////////////////////////////////////////////////////////////
 //REQUIRES USER TO BE LOGGED IN
