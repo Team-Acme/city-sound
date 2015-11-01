@@ -19,6 +19,13 @@ body {
   border: solid 1px black;
   padding: 0 10px;
 }
+#CreateNewTracksContainer {
+  width: 600px;
+  height: auto;
+  border: solid 1px black;
+  padding: 0 20px 20px 20px;
+  text-align: center; 
+}
 #SoundCloudView {
   width: 500px;
   min-height: 300px;
