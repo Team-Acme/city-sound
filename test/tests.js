@@ -26,11 +26,16 @@ describe('SaveLoginView', function() {
 });
 
 describe('addPlaylist', function(){
-  var addplaylist;
+  var saveloginview;
   before(function() {
-  addplaylist = new addPlaylist();
+    saveloginview = new SaveLoginView();
 });
   it('should print string', function() {
-    expect(addPlaylist).to.console.log();
+    var _log = console.log;
+    console.log = function(arg1) {
+        expect (arg1).to.eq("heard button Save / Login click");
+    };
+    saveloginview.addPlaylist();
+    console.log = _log;
   });
 });
