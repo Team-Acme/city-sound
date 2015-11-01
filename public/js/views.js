@@ -59,7 +59,6 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
-
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR SaveLoginView:
@@ -132,12 +131,12 @@ var GUI = (function() { //IIFE for all Views
 
   });
 
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 //NOTES FOR SoundCloudView:
-  // -Holds the SoundCloud Player
+// -Holds the SoundCloud Player
 
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
   var SoundCloudView = Backbone.View.extend({
     className: 'SoundCloudView',
@@ -157,12 +156,12 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-  //NOTES FOR NamedPlaylistsView:
-  // -Will hold the user named (URLs) playlists
+//NOTES FOR NamedPlaylistsView:
+// -Will hold the user named (URLs) playlists
 
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
   var NamedPlaylistsView = Backbone.View.extend({
     className: 'lists',
@@ -178,6 +177,7 @@ var GUI = (function() { //IIFE for all Views
   });
 
   //////////////////////////////////////////////////////////////////////////////
+
   ////NOTES FOR UserView
   //This view holds all of the views
   //This view
@@ -220,7 +220,39 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
+//////////////////////////////////////////////////////////////////////////////
+
+  ////NOTES FOR CreateNewTracks:
+  //This view is like the first view that users see when they visit "Bands from Here"
+  //In this view users can enter a city and select from a list of musical genres
+  //When users push "Create", a new track list will be created
+
   //////////////////////////////////////////////////////////////////////////////
+
+    CreateNewTracks = Backbone.View.extend({
+    id: "CreateNewTracksContainer",
+    render: function() {
+    var cityName = '<input type="text" id="city-Name">';
+    var saveCityBtn = '<button id="saveCity">Create</button>';
+    this.$el.html('<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
+    },
+
+    initialize: function() {
+      this.listenTo(app.tasks, 'click', this.render);
+    },
+
+    events: {
+      "click #saveCity": "newCityPlaylist"
+    },
+
+    newCityPlaylist: function() {
+    $("#CreateNewTracksContainer").remove();
+    }
+
+    });
+
+  //////////////////////////////////////////////////////////////////////////////
+
   ////NOTES FOR CreateTracks:
   //This view is the first view that users see when they visit "Bands from Here"
   //In this view users can enter a city and select from a list of musical genres
@@ -231,7 +263,7 @@ var GUI = (function() { //IIFE for all Views
   CreateTracks = Backbone.View.extend({
     id: "CreateTracksContainer",
     render: function() {
-    var cityName = '<input type="text" id="post-title">';
+    var cityName = '<input type="text" id="city-Name">';
     var saveCityBtn = '<button id="saveCity">Create</button>';
     this.$el.html('<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
     },
@@ -254,10 +286,12 @@ var GUI = (function() { //IIFE for all Views
       newUserView = new UserView({
         model: userModel
       });
+      var newCreateNewTracks = new CreateNewTracks();
       newSoundCloudView = new SoundCloudView();
       newNamedPlaylistsView = new NamedPlaylistsView();
 
       newUserView.render(user);
+      newCreateNewTracks.render();
       newSoundCloudView.render();
       newNamedPlaylistsView.render();
       $("#app").empty();
