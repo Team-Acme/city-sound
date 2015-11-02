@@ -3,6 +3,7 @@ var Backbone;
 var WidgetView;
 var widget;
 var SaveLoginView;
+var newCreateNewTracks;
 var CreatePlaylistView;
 var namePlaylistContainer;
 var playlistName;
@@ -44,7 +45,7 @@ var GUI = (function() { //IIFE for all Views
 ///////////////////////////////////////////////////////////////////////////////
 
   WidgetView = Backbone.View.extend({
-
+    className: 'widgetContainer',
     render: function() {
       widget = '<div id="widget"></div>';
       this.$el.html('<b>' + widget + " " + '<br></br>');
@@ -68,16 +69,16 @@ var GUI = (function() { //IIFE for all Views
   // -The "createAcct" function renders the CreateAcctView
 
   //////////////////////////////////////////////////////////////////////////////
+
   SaveLoginView = Backbone.View.extend({
   render: function() {
   var createSaveLoginViewContainer = '<div id="createSaveLoginViewContainer">';
-  var playlistTitle = '<input id= "playlistTitle" type="text" value="" />';
   var userName = '<input id= "userName" type="text" value="" />';
   var password = '<input id= "password" type="text" value="" />';
-  var saveLogin = '<button id="saveLoginID">Save / Login</button>';
+  var saveLogin = '<button id="saveLoginID">Login</button>';
   var signUp = '<button id="signUpID">Sign Up</button>';
   var closeDiv = '</div>';
-  this.$el.html(createSaveLoginViewContainer + "New Playlist" + "<div>" + playlistTitle + "</div>" +
+  this.$el.html(createSaveLoginViewContainer +
     "Username" + "<br><div>" + userName + "</div><div>" + "Password" + "<br><div>" + password + "</div><div>" + saveLogin + "</div>" + "</div><div>" + signUp + "</div>" + closeDiv);
     return this;
   },
@@ -133,6 +134,29 @@ var GUI = (function() { //IIFE for all Views
 
 //////////////////////////////////////////////////////////////////////////////
 
+//NOTES FOR NewPLaylistView:
+// -This is the area where people can create new playlists
+
+//////////////////////////////////////////////////////////////////////////////
+
+  var NewPLaylistView = Backbone.View.extend({
+    className: 'newPlaylist',
+    initalize: function() {
+
+    },
+
+    render: function() {
+      label = '<h2>New Playlists</h2>';
+      console.log("NamedPlaylistView render is listening");
+      // this.$el.html(label);
+      var cityName = '<input type="text" id="city-Name">';
+      var saveCityBtn = '<button id="saveCity">Create</button>';
+      this.$el.html(label +'<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
+    }
+  });
+
+//////////////////////////////////////////////////////////////////////////////
+
 //NOTES FOR SoundCloudView:
 // -Holds the SoundCloud Player
 
@@ -150,9 +174,12 @@ var GUI = (function() { //IIFE for all Views
     },
 
     render: function() {
-      label = '<h2>SoundCloud Widget</h2>';
+      label = '<h2>SoundCloud Widget Holder</h2>';
       console.log(" SoundCloudView render is listening");
       this.$el.html(label);
+      var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
+      var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">Save</button>';
+      this.$el.html(label +'<b>' + "Playlist Title: " + '</b>' + saveCurrentPlaylist + '</br>' + '</b>' + '</b>' + '<b>' + saveCurrentPlaylistBtn);
     }
   });
 
@@ -180,17 +207,20 @@ var GUI = (function() { //IIFE for all Views
 
   ////NOTES FOR UserView
   //This view holds all of the views
-  //This view
+  //This view also has the login and logout buttons
+
   //////////////////////////////////////////////////////////////////////////////
 
   UserView = Backbone.View.extend({
     render: function(user) {
       userViewContainer = '<div id="userViewContainer">';
+
+      newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
       lists = '<div id="lists"></div>';
-      buttons = '<button id="save">Save Playlist</button><button id="logout">Logout</button>';
+      buttons = '<button id="save">Login</button><button id="logout">Logout</button>';
       closeDiv = '</div>';
-      this.$el.html(userViewContainer + soundcloudPlayer + lists + buttons + closeDiv);
+      this.$el.html(userViewContainer + newPlaylistCity +soundcloudPlayer + lists + buttons + closeDiv);
     },
 
     events: {
@@ -203,14 +233,11 @@ var GUI = (function() { //IIFE for all Views
     },
 
     logout: function() {
-      console.log('click heard on logout button');
-      // var newCreateTracks = new CreateTracks();
-      // newCreateTracks.render();
-      // $("#app").empty();
-      // $("#app").append(CreateTracks.$el);
-      // window.onload = 'file:///Users/airHome/Desktop/city-sound/test.html';
-      $("#userViewContainer").remove();
-
+    console.log('click heard on logout button');
+    var firstView = new CreateTracks();
+    firstView.render();
+    $("#app").append(firstView.$el);
+    $("#userViewContainer").remove();
     },
 
     createPlaylist: function() {
@@ -219,37 +246,6 @@ var GUI = (function() { //IIFE for all Views
         this.$el.append(newCreatePlaylist.render().$el);
     }
   });
-
-//////////////////////////////////////////////////////////////////////////////
-
-  ////NOTES FOR CreateNewTracks:
-  //This view is like the first view that users see when they visit "Bands from Here"
-  //In this view users can enter a city and select from a list of musical genres
-  //When users push "Create", a new track list will be created
-
-  //////////////////////////////////////////////////////////////////////////////
-
-    CreateNewTracks = Backbone.View.extend({
-    id: "CreateNewTracksContainer",
-    render: function() {
-    var cityName = '<input type="text" id="city-Name">';
-    var saveCityBtn = '<button id="saveCity">Create</button>';
-    this.$el.html('<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
-    },
-
-    initialize: function() {
-      this.listenTo(app.tasks, 'click', this.render);
-    },
-
-    events: {
-      "click #saveCity": "newCityPlaylist"
-    },
-
-    newCityPlaylist: function() {
-    $("#CreateNewTracksContainer").remove();
-    }
-
-    });
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -283,21 +279,24 @@ var GUI = (function() { //IIFE for all Views
         username: user
       });
 
+      
       newUserView = new UserView({
         model: userModel
       });
-      var newCreateNewTracks = new CreateNewTracks();
+      newNewPlaylistView = new NewPLaylistView();
       newSoundCloudView = new SoundCloudView();
       newNamedPlaylistsView = new NamedPlaylistsView();
 
       newUserView.render(user);
-      newCreateNewTracks.render();
+      newNewPlaylistView.render();
       newSoundCloudView.render();
       newNamedPlaylistsView.render();
       $("#app").empty();
       $("#app").append(newUserView.$el);
+      $("#newPlaylist").append(newNewPlaylistView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
       $("#lists").append(newNamedPlaylistsView.$el);
+      
     }
   });
 
