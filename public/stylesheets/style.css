@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+#CreateTracksContainer {
+  width: 600px;
+  height: auto;
+  margin: auto;
+  border: solid 1px black;
+  text-align: center;
+}
