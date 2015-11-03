@@ -4,9 +4,9 @@ SC.initialize({
     //redirect_uri: 'http://example.com/callback'
   });
 
-SC.oEmbed('https://soundcloud.com/haldymusic/sets/web', {
-    element: document.getElementById('app')
-});
+// SC.oEmbed('https://soundcloud.com/haldymusic/sets/web', {
+//     element: document.getElementById('app')
+// });
 
 // get users from city entered
 // map returned users array to just array of user_id
@@ -24,6 +24,7 @@ function trackListBuilt() {
       //   player.play();
       // });
       SC.oEmbed(tracksList[i], {
+        "height": 81,
         element: document.getElementById('app' + i)
       });
     }
