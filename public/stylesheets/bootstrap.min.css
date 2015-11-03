@@ -39,7 +39,7 @@ body {
   overflow:auto;
   margin: 0 auto;
 }
-#widget{
+#widgetContainer{
   width: 250px;
   min-height: 150px;
   height: auto;
