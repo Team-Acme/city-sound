@@ -4,7 +4,9 @@ SC.initialize({
     //redirect_uri: 'http://example.com/callback'
   });
 
-
+SC.oEmbed('https://soundcloud.com/haldymusic/sets/web', {
+    element: document.getElementById('app')
+});
 
 // get users from city entered
 // map returned users array to just array of user_id
@@ -17,13 +19,13 @@ function trackListBuilt() {
     console.log('Track list is built');
     console.log(tracksList);
     for (var i = 0; i < tracksList.length; i++) {
-      SC.stream('/tracks/' + tracksList[i]).then(function(player){
-        console.log('track playing: ' + tracksList[i]);
-        player.play();
-      });
-      // SC.oEmbed(tracksList[i], {
-      //     element: document.getElementById('app')
+      // SC.stream('/tracks/' + tracksList[i]).then(function(player){
+      //   console.log('track playing: ' + tracksList[i]);
+      //   player.play();
       // });
+      SC.oEmbed(tracksList[i], {
+        element: document.getElementById('app' + i)
+      });
     }
   };
 };
@@ -34,48 +36,48 @@ function musicTracks(user) {
   responsesNeeded++;
   console.log(responsesNeeded);
 
-  SC.get('/users/' + user + '/tracks', {
-    //user_id : user,
-    //genres : 'alternative'
+  SC.get('/users/' + user + '/tracks.json', {
+    duration: {to:300000},
+    //tags: 'music',
+    //genre: 'Alternative'
 
   })
   .then(function(tracks) {
     console.log(tracks);
     if (tracks.length !== 0) {
-      tracksList.push(tracks[0].id);
+      // tracksList.push(tracks[0].id); // build array of track ids
+      tracksList.push(tracks[0].uri); // build array of track urls
     };
     responsesNeeded--;
     trackListBuilt();
   })
-  // .fail(function() {
-  //   responsesNeeded--;
-  //   trackListBuilt();
-  // });
-  // return;
 };
 
-// SC.get('/playlists', {
-//   q: 'Seattle local music', limit: 10
-// }).then(function(playlists) {
-//     console.log(playlists);
-//     playlistUri = playlists.map(function(obj){
-//       var rObj = {};
-//       rObj.uri = obj.uri;
-//       return rObj;
-//     });
-//     console.log(playlistsUri);
-//     // for(var i = 0; i < playlistsUri.length; i++ ) {
-//     //   console.log(i);
-//     //   musicTracks(usersIdOnly[i].id);
-//     //
-//     // };
-//
-// });
+// function makeDivsFromTracks(tracks,SC)
+// {
+//  var track;
+//  var permUrl;
+//  var newDiv;
+//  for(var ctr=0;ctr<tracks.length;ctr++)
+//  {
+//   newDiv=document.createElement("div");
+//   newDiv.id="track"+ctr;
+//   track=tracks[ctr];
+//   SC.oEmbed(track.permalink_url,{color:"ff0066"},newDiv);
+//   document.body.appendChild(newDiv);
+//  }
+// }
 
 
+// SC.get('/tracks',{duration:{to:900000},tags:'hitech',downloadable:true},
+//         function(tracks,SC)
+//         {
+//          makeDivsFromTracks(tracks,SC);
+//         });
 
-SC.get('/users', {
-  q: 'Portland local music', limit: 50
+
+SC.get('/users.json', {
+  q: 'Portland local music', limit: 20
 }).then(function(users) {
     console.log(users);
     usersIdOnly = users.map(function(obj){
@@ -104,7 +106,3 @@ SC.get('/users', {
 // });
 
 // embed player in page using playlist
-
-  // SC.oEmbed('http://soundcloud.com/tracks/90390073', {
-  //     element: document.getElementById('app')
-  // });
