@@ -24,8 +24,7 @@ function trackListBuilt() {
       //   player.play();
       // });
       SC.oEmbed(tracksList[i], {
-        "height": 81,
-        element: document.getElementById('app' + i)
+        element: document.getElementById('widgetContainer')
       });
     }
   };
