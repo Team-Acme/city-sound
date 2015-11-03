@@ -21,7 +21,6 @@ var app = express();
 //This section will contain our work with Passport
 
 //===============EXPRESS================
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
