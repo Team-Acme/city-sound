@@ -67,7 +67,7 @@ var GUI = (function() { //IIFE for all Views
 
   /////////////////////////////
 
-  LoginView = Backbone.view.extend({
+  LoginView = Backbone.View.extend({
     id: 'loginView',
     render: function(){
       label = '<h2>Log In</h2>';
@@ -76,7 +76,7 @@ var GUI = (function() { //IIFE for all Views
     initialize: function(){
 
     }
-  })
+  });
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -108,9 +108,6 @@ var GUI = (function() { //IIFE for all Views
 
     loginUser: function() {
       console.log("heard button Save / Login click");
-      var loginUser = new LoginView();
-      loginUser.render();
-      $("#userlogin").append(loginUser.$el);
       $("#createSaveLoginViewContainer").remove();
     },
 
@@ -268,8 +265,11 @@ var GUI = (function() { //IIFE for all Views
 
     createPlaylist: function() {
       console.log('click heard on create Playlist button');
-      var newCreatePlaylist = new SaveLoginView();
-      this.$el.append(newCreatePlaylist.render().$el);
+      //var newCreatePlaylist = new SaveLoginView();
+      //this.$el.append(newCreatePlaylist.render().$el);
+      var loginUser = new LoginView();
+      loginUser.render();
+      $("#userlogin").append(loginUser.$el);
     }
   });
 
