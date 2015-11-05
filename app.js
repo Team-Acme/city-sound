@@ -9,9 +9,6 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-var TwitterStrategy = require('passport-twitter');
-var GoogleStrategy = require('passport-google');
-var FacebookStrategy = require('passport-facebook');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -21,7 +18,6 @@ var app = express();
 //This section will contain our work with Passport
 
 //===============EXPRESS================
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
