@@ -33,6 +33,7 @@ var newUserView;
 var newSoundCloudView;
 var newNamedPlaylistsView;
 var firstView;
+var appAppear;
 
 //STOP DELETING STUFF
 var GUI = (function() { //IIFE for all Views
@@ -142,7 +143,7 @@ var GUI = (function() { //IIFE for all Views
 
   var NewPLaylistView = Backbone.View.extend({
     className: 'newPlaylist',
-    
+
     initalize: function() {
 
     },

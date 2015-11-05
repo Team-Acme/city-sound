@@ -25,7 +25,7 @@ describe('SaveLoginView', function() {
   });
 });
 
-describe('addPlaylist', function(){
+describe('loginUser', function(){
   var saveloginview;
   before(function() {
     saveloginview = new SaveLoginView();
@@ -35,7 +35,7 @@ describe('addPlaylist', function(){
     console.log = function(arg1) {
         expect (arg1).to.eq("heard button Save / Login click");
     };
-    saveloginview.addPlaylist();
+    saveloginview.loginUser();
     console.log = _log;
   });
 });
