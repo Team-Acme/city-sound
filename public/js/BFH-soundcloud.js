@@ -4,9 +4,48 @@ SC.initialize({
     //redirect_uri: 'http://example.com/callback'
   });
 
-SC.oEmbed('https://soundcloud.com/haldymusic/sets/web', {
-    element: document.getElementById('app')
-});
+// SC.oEmbed('https://soundcloud.com/haldymusic/sets/web', {
+//     element: document.getElementById('app')
+// });
+///////////////////////////////////////////////////////////////////////////////
+(function(){
+    var widgetIframe = document.getElementById('sc-widget'),
+        widget       = SC.Widget(widgetIframe),
+        newSoundUrl = 'http://api.soundcloud.com/tracks/13692671';
+
+    widget.bind(SC.Widget.Events.READY, function() {
+      // load new widget
+      widget.bind(SC.Widget.Events.FINISH, function() {
+        widget.load(newSoundUrl, {
+          show_artwork: false
+        });
+      });
+    });
+
+  }());
+///////////////////////////////////////////////////////////////////////////////
+// (function(){
+//     var widgetIframe = document.getElementById('sc-widget'),
+//         widget       = SC.Widget(widgetIframe);
+//
+//     widget.bind(SC.Widget.Events.READY, function() {
+//       widget.bind(SC.Widget.Events.PLAY, function() {
+//         // get information about currently playing sound
+//         widget.getCurrentSound(function(currentSound) {
+//           console.log('sound ' + currentSound.get('') + 'began to play');
+//         });
+//       });
+//       // get current level of volume
+//       widget.getVolume(function(volume) {
+//         console.log('current volume value is ' + volume);
+//       });
+//       // set new volume level
+//       widget.setVolume(50);
+//       // get the value of the current position
+//     });
+//
+//   }());
+//////////////////////////////////////////////////////////////////////////////
 
 // get users from city entered
 // map returned users array to just array of user_id

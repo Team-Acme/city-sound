@@ -9,9 +9,6 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-var TwitterStrategy = require('passport-twitter');
-var GoogleStrategy = require('passport-google');
-var FacebookStrategy = require('passport-facebook');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
