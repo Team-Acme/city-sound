@@ -1,4 +1,4 @@
-
+// initialize soundcloud api
 SC.initialize({
     client_id: '76d62ab386771b9cd98b1904eb234d8d',
     //redirect_uri: 'http://example.com/callback'
