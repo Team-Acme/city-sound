@@ -1,32 +1,45 @@
 
 console.log("models.js is loading");
 
-var UserModel = Backbone.Model.extend({
-  defaults: {
-    username:'',
-    playlistCreated: [],
-  },
-    addUser : function (str) {
-      this.set("username", str);
+var BFHModels = (function() {
+  var UserModel = Backbone.Model.extend({
+    defaults:{
+      username:'',
+      password:''
+    }
+  });
+
+  var PostModel = Backbone.Model.extend({
+    idAttribute: 'key',
+    defaults:{
+      timestamp: '',
+      title:'',
+      author:''
+    }
+  });
+
+  var Posts = Backbone.Collection.extend({
+    model: PostModel,
+    url:'/posts',
+    initialize: function (){
+      this.fetch();
+    }
+  });
+
+
+  var UsersPosts = Backbone.Collection.extend({
+    model: PostModel,
+    url:'/posts/' + user,
+    initialize: function (){
+      this.fetch();
+    }
+  });
+
+  return {
+    UserModel: UserModel,
+    PostModel: PostModel,
+    Posts: Posts,
+    UsersPosts: UsersPosts
   }
-});
 
-var PlaylistModel = Backbone.Model.extend({
-  defaults: {
-    playListName:'',
-    playListUser:'', //creates something that archives username
-  },
-
-  newList : function (playListName) {
-    this.set("playListName", playListName);
-  }
-});
-
-
-var UserCollection = Backbone.Collection.extend({
-  model : UserModel
-});
-
-var PlaylistCollection = Backbone.Collection.extend({
-  model : PlaylistModel
-});
+})();

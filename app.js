@@ -9,8 +9,11 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
-var routes = require('./routes/index');
+var posts = require('./routes/posts');
 var users = require('./routes/users');
+var sessionRoutes = require('./routes/sessions');
+var userRoutes = require('./routes/users');
+var postRoutes = require('./routes/posts');
 
 var app = express();
 //===============PASSPORT===============
@@ -23,20 +26,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-//?? app.use(logger('combined'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  // to use secure cookies use https and update code
+  secret: process.env.SESSION_SECRET || 'secret',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(function(req, res, next) {
+  // set session and flash info to locals
+  res.locals.session = req.session;
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', sessionRoutes);
+app.use('/users', userRoutes);
+app.use('/posts', postRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -69,22 +77,22 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Session-persisted message middleware
-app.use(function(req, res, next){
-  var err = req.session.error,
-      msg = req.session.notice,
-      success = req.session.success;
+// // Session-persisted message middleware
+// app.use(function(req, res, next){
+//   var err = req.session.error,
+//       msg = req.session.notice,
+//       success = req.session.success;
 
-  delete req.session.error;
-  delete req.session.success;
-  delete req.session.notice;
+//   delete req.session.error;
+//   delete req.session.success;
+//   delete req.session.notice;
 
-  if (err) res.locals.error = err;
-  if (msg) res.locals.notice = msg;
-  if (success) res.locals.success = success;
+//   if (err) res.locals.error = err;
+//   if (msg) res.locals.notice = msg;
+//   if (success) res.locals.success = success;
 
-  next();
-});
+//   next();
+// });
 
 
 

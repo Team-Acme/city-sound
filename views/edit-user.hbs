@@ -1,0 +1,19 @@
+<h1>{{title}}</h1>
+<p>{{message}}</p>
+<form class="outerbox" action="/users/{{session.key}}/edit" method="POST">
+  <input type="hidden" name="_method" value="PUT">
+  <div class="namefield">
+    <label>Username</label>
+    <input type="text" name="username" value="{{session.user.username}}">
+  </div>
+  <div class="textfield">
+    <label>About Me</label>
+    <textarea name="bio">{{session.user.bio}}</textarea>
+  </div>
+  <div class="passwordbox">
+    <label>Password</label>
+    <input type="password" name="password">
+  </div>
+  <input class="submitbtn" type="submit">
+  <a href="/posts/main">Cancel</a>
+</form>
