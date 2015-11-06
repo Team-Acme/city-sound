@@ -191,11 +191,11 @@ var GUI = (function() { //IIFE for all Views
     },
 
     render: function() {
-      label = '<h2>New Playlists</h2>';
+      label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
       var cityName = '<input type="text" id="city-Name">';
-      var saveCityBtn = '<button id="saveCity">Create</button>';
+      var saveCityBtn = '<div id="saveCity">Go!</div>';
       this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
     }
   });
@@ -219,7 +219,7 @@ var GUI = (function() { //IIFE for all Views
     },
 
     render: function() {
-      label = '<h2>SoundCloud Widget Holder</h2>';
+      label = '<h2>Now Playing...</h2>';
       console.log(" SoundCloudView render is listening");
       this.$el.html(label);
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
@@ -267,7 +267,7 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-  
+
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -282,7 +282,7 @@ var GUI = (function() { //IIFE for all Views
       return this;
     },
 
-   
+
    });
 
 
