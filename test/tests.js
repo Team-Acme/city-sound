@@ -1,4 +1,5 @@
 var expect = chai.expect;
+var assert = chai.assert;
 
 describe('WidgetView', function() {
   var widgetview;
@@ -35,14 +36,14 @@ describe('addPlaylist', function(){
     console.log = function(arg1) {
         expect (arg1).to.eq("heard button Save / Login click");
     };
-    saveloginview.addPlaylist();
+    saveloginview.loginUser();
     console.log = _log;
   });
 });
 describe('searching by city', function() {
   var searchView;
   before(function() {
-    searchView = new CreateTracks;
+    searchView = new UserView;
     searchView.render();
   });
   describe('when a city is entered', function() {
@@ -57,7 +58,7 @@ describe('searching by city', function() {
         $saveCity.click();
       });
       it('renders UserView', function() {
-        expect(searchView.appAppear.callCount).to.eq(1);
+        expect(searchView.appAppear.callCount,1)
       });
     });
   });
