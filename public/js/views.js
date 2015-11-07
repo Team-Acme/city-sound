@@ -62,7 +62,7 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
-  
+
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR NewPLaylistView:
@@ -106,7 +106,28 @@ var GUI = (function() { //IIFE for all Views
       // this.$el.html(label);
       var cityName = '<input type="text" id="city-Name">';
       var saveCityBtn = '<div id="saveCity">Go!</div>';
-      this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
+      var buttons = '<button id="logout">Cancel</button>';
+      this.$el.html(label + '<b>' + 'City:' + buttons + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
+    },
+    events: {
+      "click #logout": "logout",
+    },
+
+    initialize: function() {
+
+    },
+
+    logout: function() {
+      console.log('heard click on logout');
+      $.ajax({
+         url: '/logout'
+       }).done(function(data) {
+         console.log('Successfully Logged Out');
+       });
+       user = '';
+       bio = '';
+       key = '';
+       window.location = '/';
     }
   });
 
