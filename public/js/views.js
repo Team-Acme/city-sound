@@ -62,7 +62,7 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
-  
+
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR NewPLaylistView:
@@ -104,9 +104,9 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
-      var cityName = '<input type="text" id="city-Name">';
-      var saveCityBtn = '<div id="saveCity">Go!</div>';
-      this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
+      var cityName = '<select class="citiesList"><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
+      var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
+      this.$el.html(label + cityName + saveCityBtn);
     }
   });
 
