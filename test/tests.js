@@ -26,7 +26,7 @@ describe('SaveLoginView', function() {
   });
 });
 
-describe('addPlaylist', function(){
+describe('loginUser', function(){
   var saveloginview;
   before(function() {
     saveloginview = new SaveLoginView();
