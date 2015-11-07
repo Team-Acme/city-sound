@@ -1,15 +1,21 @@
 var express = require('express');
-var router = express.Router();var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
 
-/////////////////////////////////////////////////////////////////////
-//REQUIRES USER TO BE LOGGED IN
-/////////////////////////////////////////////////////////////////////
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(methodOverride(function(req, res){
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}));
 
+// requires a user to be logged in
 function requireSession(req, res, next) {
   if (!req.session.user) {
     res.redirect('/');
@@ -17,41 +23,28 @@ function requireSession(req, res, next) {
     next();
   }
 }
+//NOTES FOR user routes
+////////////////////////////////////////////////////////////////////////////////
+// When someone pushes "Sign Up " on the client ('/'), they are taken to '/register'
+// Users enter their username and password and then push "Submit"
+// The db searches for the username entered, if it is, user is redirected to '/register'
+// If the username is not found, the username and password are posted to 'bfh-users'
+// users are the redirected to ('/') to sign-in with their new username & password
 
-/////////////////////////////////////////////////////////////////////
-//ROUTE FOR APP AS A WHOLE
-/////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-router.get('/', function(req, res) {
-  res.render('main', { title: '', stylesheet: '/stylesheets/bootstrap.min.css' });
+router.get('/register', function(req, res, next) {
+  res.render('register', { stylesheet: '/stylesheets/register_edit.css' });
 });
-
-/////////////////////////////////////////////////////////////////////
-//ROUTE TO SAVE NEW PLAYLIST
-/////////////////////////////////////////////////////////////////////
-
-router.post('/', requireSession, function(req, res, next) {
-  db.post('bfh-playlists', {
-    "title": req.body.title,
-    "timestamp": req.body.timestamp //NOTES: add timestamp function somewhere
-  }).then(function(result) {
-    console.log('Playlist Saved');
-  });
-});
-
-
-//////////////////////////////////////////////////////////////////////
-//CREATE USER ACCT ROUTE
-//////////////////////////////////////////////////////////////////////
 
 router.post('/', function(req, res, next) {
   var usernameAvailable = true;
-  db.search('users', 'value.username: ' + req.body.username).then(function (result) {
+  db.search('bfh-users', 'value.username: ' + req.body.username).then(function (result) {
     if (result.body.count > 0) {
       console.log('Username taken');
       res.redirect('/register');
     } else {
-      db.post('users', {
+      db.post('bfh-users', {
         "username": req.body.username,
         "password": req.body.password,
       }).then(function(result) {
@@ -64,38 +57,27 @@ router.post('/', function(req, res, next) {
   });
 });
 
-//////////////////////////////////////////////////////////////////////
-//PULL UP PLAYLISTS ROUTE
-//////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+  // Will use this edit user route once all other routes are working
 
-router.get('/:username', requireSession, function(req, res, next) {
-  db.list('bfh-playlists').then(function(result) {
-    var userPlaylists = [];
-    for (var i = 0; i < result.body.results.length; i++) {
-      if (result.body.results[i].value.playListUser === req.params.username) {
-        //NOTE: Verify user logged in is owner of playlist (find replacement for author)
-        //the if statement above is checking the playListUser in the model to the user
-        //logged in (we hope)
-        userPlaylists.push(result.body.results[i].value)
-      }
-    }
-    res.send(userPlaylists);
-  });
-});
+  ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//LOGIN ROUTE
-//////////////////////////////////////////////////////////////////////
+// router.get('/:id/edit', requireSession, function(req, res, next) {
+//   res.render('edit-user', { title: 'Edit User', stylesheet: '/stylesheets/register_edit.css' });
+// });
 
+// router.put('/:id/edit', requireSession, function(req, res, next) {
+//   db.put('bfh-users', req.params.id, {
+//     "username": req.body.username,
+//     "password": req.body.password
+//   }).then(function(result) {
+//     req.session.user = {"username": req.body.username,
+//     "password": req.body.password};
+//     console.log('Edited User');
+//     res.redirect('/posts/main');
+//   });
+// });
 
-
-//////////////////////////////////////////////////////////////////////
-//LOGOUT ROUTE
-//////////////////////////////////////////////////////////////////////
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
 
 module.exports = router;
+
