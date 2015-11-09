@@ -6,6 +6,7 @@ var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
 
+
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(methodOverride(function(req, res){
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -53,9 +54,34 @@ router.post('/', function(req, res, next) {
       })
     }
   }).fail(function(err) {
-    res.send(err);
+    res.redirect('/');
+    // res.send(err);
   });
 });
+
+//stores username and password hash/salt in db, then calls mailer
+//   database('person').where({
+//     email: email
+//   }).then(function(result) {
+//     if (result.length !== 0) {
+//       console.error('Email address in use!');
+//       response.redirect('/login'); // we'll want error codes for this
+//     } else {
+//       bcrypt.hash(password, 12, function(err, hash) {
+//         var id = database('person').insert({ 
+//           email: email, 
+//           hash: hash })
+//           .returning('id') // required for psql
+//           // generate nonce & send confirmation email
+//           .then(function(id) {
+//             mailer({ email: email, nonce: nonce, id: id });
+//             response.redirect('/newuser');
+//           });
+//       });
+//     }
+//   });
+// });
+// ​
 
   ////////////////////////////////////////////////////////////////////////////////
   // Will use this edit user route once all other routes are working
