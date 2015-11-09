@@ -16,42 +16,40 @@ describe('WidgetView', function() {
   });
 });
 
-describe('SaveLoginView', function() {
-  var saveloginview;
+describe('NewPLaylistView', function() {
+  var newplaylistview;
   before(function() {
-    saveloginview = new SaveLoginView();
+    newplaylistview = new NewPLaylistView();
   });
-  it('should render method', function() {
-    expect(saveloginview).to.respondTo('render');
+  it('should initialize method', function() {
+    expect(newplaylistview).to.respondTo('initialize');
   });
 });
 
-describe('loginUser', function(){
-  var saveloginview;
-  before(function() {
-    saveloginview = new SaveLoginView();
-});
-  it('should print string', function() {
-    var _log = console.log;
-    console.log = function(arg1) {
-        expect (arg1).to.eq("heard button Save / Login click");
-    };
-    saveloginview.loginUser();
-    console.log = _log;
-  });
-});
-describe('searching by city', function() {
+// describe('appAppear', function(){
+//   var appear;
+//   before(function() {
+//   appear = new appAppear();
+// });
+//   it('should render method', function() {
+//     expect(appappear).to.respondTo('render');
+//   });
+// });
+describe('logging in', function() {
   var searchView;
   before(function() {
     searchView = new UserView;
     searchView.render();
   });
-  describe('when a city is entered', function() {
+  describe('clicking login', function() {
     before(function (){
       var $postTitle = searchView.$('#post-title');
       $postTitle.val('Portland');
     });
-    describe('clicking submit', function() {
+    it('renders UserView', function() {
+      expect(searchView.appAppear.callCount,1)
+    });
+    describe('clicking sign up', function() {
       before(function(){
         sinon.stub(searchView, 'appAppear');
         var $saveCity = searchView.$('#saveCity');
