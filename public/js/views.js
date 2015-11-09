@@ -87,11 +87,12 @@ var GUI = (function() { //IIFE for all Views
       // this.$el.html(label);
       var cityName = '<input type="text" id="city-Name">';
       var saveCityBtn = '<div id="saveCity">Go!</div>';
-      var buttons = '<button id="logout">Cancel</button>';
-      this.$el.html(label + '<b>' + 'City:' + buttons + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn);
+      var cancelBtn = '<button id="logout">Cancel</button>';
+      this.$el.html(label + '<b>' + 'City:' + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn + cancelBtn);
     },
     events: {
       "click #logout": "logout",
+      "click #saveCity": "appAppear"
     },
 
     initialize: function() {
