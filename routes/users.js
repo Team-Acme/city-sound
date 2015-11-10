@@ -5,7 +5,7 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
-var bcrypt = require('bcryptjs');
+//var bcrypt = require('bcryptjs');
 
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -89,4 +89,3 @@ router.post('/', function(req, res, next) {
 
 
 module.exports = router;
-
