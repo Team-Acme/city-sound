@@ -4,6 +4,7 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
+var bcrypt = require('bcrypt');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());

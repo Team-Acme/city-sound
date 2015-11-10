@@ -1,39 +1,20 @@
-
 //GLOBAL VARIABLES FOR TESTING
 var Backbone;
 var WidgetView;
-var widget;
-var SaveLoginView;
-var newCreateNewTracks;
-var CreatePlaylistView;
-var namePlaylistContainer;
+var NewPLaylistView;
 var playlistName;
-var savePlaylist;
 var closeDiv;
 var SoundCloudView;
 var label;
-var NamedPlaylistsView;
 var UserView;
 var userViewContainer;
 var soundcloudPlayer;
-var lists;
 var tracksPlayer;
-var buttons;
-var closeDiv;
-var CreatePlaylistView;
-var CreateTracks;
-var cityName;
-var saveCityBtn;
-var classical;
-var jazz;
-var rap;
-var newAge;
-var user;
 var userModel;
 var newUserView;
 var newSoundCloudView;
 var newNamedPlaylistsView;
-var firstView;
+var appAppear;
 
 //STOP DELETING STUFF
 var GUI = (function() { //IIFE for all Views
@@ -48,7 +29,7 @@ var GUI = (function() { //IIFE for all Views
   WidgetView = Backbone.View.extend({
     className: 'widgetContainer',
     render: function() {
-      widget = '<div id="widget"></div>';
+    var widget = '<div id="widget"></div>';
       this.$el.html('<b>' + widget + " " + '<br></br>');
 
     },
@@ -70,22 +51,24 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-  var NewPLaylistView = Backbone.View.extend({
+    NewPLaylistView = Backbone.View.extend({
     className: 'newPlaylist',
-
     initialize: function() {
       this.listenTo(app.tracks, 'click', this.render);
     },
 
     events: {
       "click #saveCity": "appAppear",
+      "click #logout": "logout"
     },
 
     appAppear: function() {
-      user = $("#saveCity").val();
+      var user = $("#saveCity").val();
       app.currentUser = user;
       // userModel = app.users.findWhere({username: user});
-      newUserView = new UserView({model: userModel});
+      newUserView = new UserView({
+        model: userModel
+      });
       newNewPlaylistView = new NewPLaylistView();
       newSoundCloudView = new SoundCloudView();
       newNamedPlaylistsView = new NamedPlaylistsView();
@@ -103,10 +86,34 @@ var GUI = (function() { //IIFE for all Views
     render: function() {
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
+
       // this.$el.html(label);
       var cityName = '<select class="citiesList"><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       this.$el.html(label + cityName + saveCityBtn);
+
+      buttons = '<button id="logout">Logout</button>';
+      closeDiv = '</div>';
+      var cityName = '<input type="text" id="city-Name">';
+      var saveCityBtn = '<div id="saveCity">Go!</div>';
+      this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn + '<b>' + buttons + closeDiv);
+    },
+
+      logout: function() {
+      console.log('heard click on logout');
+      $.ajax({
+        url: '/logout'
+      }).done(function(data) {
+        console.log('Successfully Logged Out');
+      });
+      user = '';
+      bio = '';
+      key = '';
+      window.location = '/';
+    },
+
+    initialize: function() {
+
     }
   });
 
@@ -129,16 +136,16 @@ var GUI = (function() { //IIFE for all Views
     },
 
     render: function() {
-      label = '<h2>Now Playing...</h2>';
+      label = '<h2>Save Your Playlist</h2>';
       console.log(" SoundCloudView render is listening");
       this.$el.html(label);
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">Save</button>';
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/78115793&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
-      this.$el.html(label + '<b>' + "Playlist Title: " + '</b>' + saveCurrentPlaylist + '</br>' + '</b>' + '</b>' + '<b>' + saveCurrentPlaylistBtn + tracksPlayer);
+      this.$el.html(tracksPlayer + label + '<b>' + "Playlist Title: " + '</b>' + saveCurrentPlaylist + '</br>' + '</b>' + '</b>' + '<b>' + saveCurrentPlaylistBtn);
     },
 
-     events: {
+    events: {
       'click #CurrentPlaylistBtn': 'savePost'
     },
 
@@ -163,8 +170,7 @@ var GUI = (function() { //IIFE for all Views
 
   var NamedPlaylistsView = Backbone.View.extend({
     className: 'lists',
-    initalize: function() {
-    },
+    initalize: function() {},
 
     render: function() {
       label = '<h2>My Playlists</h2>';
@@ -185,13 +191,11 @@ var GUI = (function() { //IIFE for all Views
   UserView = Backbone.View.extend({
     render: function(user) {
       userViewContainer = '<div id="userViewContainer">';
-
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
       lists = '<div id="lists"></div>';
-      buttons = '<button id="logout">Logout</button>';
       closeDiv = '</div>';
-      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + buttons + closeDiv);
+      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
     },
 
     events: {
@@ -202,21 +206,8 @@ var GUI = (function() { //IIFE for all Views
 
     },
 
-    logout: function() {
-      console.log('heard click on logout');
-      $.ajax({
-         url: '/logout'
-       }).done(function(data) {
-         console.log('Successfully Logged Out');
-       });
-       user = '';
-       bio = '';
-       key = '';
-       window.location = '/';
 
-    }
   });
-
 
   // generic ctor to represent interface:
   function GUI(users, playlistName, el) {

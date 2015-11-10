@@ -5,6 +5,8 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
+var bcrypt = require('bcrypt');
+
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(methodOverride(function(req, res){
@@ -44,18 +46,25 @@ router.post('/', function(req, res, next) {
       console.log('Username taken');
       res.redirect('/register');
     } else {
-      db.post('bfh-users', {
+      bcrypt.hash(req.body.password, 12, function(err, hash) {
+      var id = db.post('bfh-users').insert({
         "username": req.body.username,
         "password": req.body.password,
-      }).then(function(result) {
+         hash: hash
+      })
+        .returning('id')
+        .then(function(result) {
         console.log('Created User Successfully');
         res.redirect('/');
       })
+     });   
     }
   }).fail(function(err) {
-    res.send(err);
+    res.redirect('/');
+    // res.send(err);
   });
 });
+
 
   ////////////////////////////////////////////////////////////////////////////////
   // Will use this edit user route once all other routes are working
