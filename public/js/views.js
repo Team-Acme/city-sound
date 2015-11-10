@@ -90,11 +90,8 @@ var GUI = (function() { //IIFE for all Views
       // this.$el.html(label);
       var cityName = '<select class="citiesList"><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
-      this.$el.html(label + cityName + saveCityBtn);
-
-      buttons = '<button id="logout">log out</button>';
+      var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      var cityName = '<input type="text" id="city-Name">';
       this.$el.html(label + "City: " + cityName + buttons +saveCityBtn + closeDiv);
     },
 
