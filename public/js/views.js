@@ -43,7 +43,6 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
-
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR NewPLaylistView:
@@ -86,15 +85,14 @@ var GUI = (function() { //IIFE for all Views
     render: function() {
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
-      // this.$el.html(label);
       buttons = '<button id="logout">Logout</button>';
       closeDiv = '</div>';
       var cityName = '<input type="text" id="city-Name">';
       var saveCityBtn = '<div id="saveCity">Go!</div>';
-       var buttons = '<button id="logout">Cancel</button>';
       this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn + '<b>' + buttons + closeDiv);
     }, 
-        logout: function() {
+
+      logout: function() {
       console.log('heard click on logout');
       $.ajax({
         url: '/logout'
@@ -104,13 +102,12 @@ var GUI = (function() { //IIFE for all Views
       user = '';
       bio = '';
       key = '';
-      window.location = '/';
+      window.location = '/';  
     },
 
     initialize: function() {
 
     }
-
   });
 
   //////////////////////////////////////////////////////////////////////////////
@@ -189,8 +186,7 @@ var GUI = (function() { //IIFE for all Views
       userViewContainer = '<div id="userViewContainer">';
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
-      var lists = '<div id="lists"></div>';
-      buttons = '<button id="logout">Logout</button>';
+      lists = '<div id="lists"></div>';
       closeDiv = '</div>';
       this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
     },
