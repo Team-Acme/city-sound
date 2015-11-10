@@ -5,7 +5,7 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -57,7 +57,7 @@ router.post('/', function(req, res, next) {
         console.log('Created User Successfully');
         res.redirect('/');
       })
-     });   
+     });
     }
   }).fail(function(err) {
     res.redirect('/');
