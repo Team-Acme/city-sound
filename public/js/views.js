@@ -1,38 +1,20 @@
 //GLOBAL VARIABLES FOR TESTING
 var Backbone;
 var WidgetView;
-var widget;
-var SaveLoginView;
-var newCreateNewTracks;
-var CreatePlaylistView;
-var namePlaylistContainer;
+var NewPLaylistView;
 var playlistName;
-var savePlaylist;
 var closeDiv;
 var SoundCloudView;
 var label;
-var NamedPlaylistsView;
 var UserView;
 var userViewContainer;
 var soundcloudPlayer;
-var lists;
 var tracksPlayer;
-var buttons;
-var closeDiv;
-var CreatePlaylistView;
-var CreateTracks;
-var cityName;
-var saveCityBtn;
-var classical;
-var jazz;
-var rap;
-var newAge;
-var user;
 var userModel;
 var newUserView;
 var newSoundCloudView;
 var newNamedPlaylistsView;
-var firstView;
+var appAppear;
 
 //STOP DELETING STUFF
 var GUI = (function() { //IIFE for all Views
@@ -47,7 +29,7 @@ var GUI = (function() { //IIFE for all Views
   WidgetView = Backbone.View.extend({
     className: 'widgetContainer',
     render: function() {
-      widget = '<div id="widget"></div>';
+    var widget = '<div id="widget"></div>';
       this.$el.html('<b>' + widget + " " + '<br></br>');
 
     },
@@ -61,6 +43,7 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
+
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR NewPLaylistView:
@@ -68,9 +51,8 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-  var NewPLaylistView = Backbone.View.extend({
+    NewPLaylistView = Backbone.View.extend({
     className: 'newPlaylist',
-
     initialize: function() {
       this.listenTo(app.tracks, 'click', this.render);
     },
@@ -81,7 +63,7 @@ var GUI = (function() { //IIFE for all Views
     },
 
     appAppear: function() {
-      user = $("#saveCity").val();
+      var user = $("#saveCity").val();
       app.currentUser = user;
       // userModel = app.users.findWhere({username: user});
       newUserView = new UserView({
@@ -109,6 +91,7 @@ var GUI = (function() { //IIFE for all Views
       closeDiv = '</div>';
       var cityName = '<input type="text" id="city-Name">';
       var saveCityBtn = '<div id="saveCity">Go!</div>';
+       var buttons = '<button id="logout">Cancel</button>';
       this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn + '<b>' + buttons + closeDiv);
     }, 
         logout: function() {
@@ -122,8 +105,12 @@ var GUI = (function() { //IIFE for all Views
       bio = '';
       key = '';
       window.location = '/';
+    },
+
+    initialize: function() {
 
     }
+
   });
 
   //////////////////////////////////////////////////////////////////////////////
@@ -202,7 +189,8 @@ var GUI = (function() { //IIFE for all Views
       userViewContainer = '<div id="userViewContainer">';
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
-      lists = '<div id="lists"></div>';
+      var lists = '<div id="lists"></div>';
+      buttons = '<button id="logout">Logout</button>';
       closeDiv = '</div>';
       this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
     },

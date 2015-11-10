@@ -19,7 +19,7 @@ function loggedIn(req, res, next) {
 ////////////////////////////////////////////////////////////////////////////////
 //The "login.hbs" renders at "/"
 //When users enter username and password and push login the db serches usernames
-//If username and password match in db, the '/posts/main' 
+//If username and password match in db, the '/posts/main'
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -36,7 +36,6 @@ router.post('/', function(req, res, next) {
       req.session.key = result.body.results[0].path.key;
       res.redirect('/posts/main');
       res.render('main', { user: req.session.user, stylesheet: '/stylesheets/bootstrap.min.css' });
-  
     } else {
       console.log('Username or password incorrect');
       res.render('login', { stylesheet: '/stylesheets/login.css' });
