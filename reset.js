@@ -23,7 +23,7 @@ db.deleteCollection('bfh-users').then(function() {
   }).then(function(result) {
     console.log('User created with id: ' + result.path.key);
   });
-});
+
 
   db.post('bfh-users', {
     username:'Molly',
@@ -32,6 +32,7 @@ db.deleteCollection('bfh-users').then(function() {
     console.log('User created with id: ' + result.path.key);
   });
 });
+
 
 db.deleteCollection('bfh-playlists').then(function() {
   db.post('bfh-playlists', {  
@@ -65,5 +66,4 @@ db.deleteCollection('bfh-playlists').then(function() {
   }).then(function(result) {
     console.log('Post created with id: ' + result.path.key);
   }); 
-
 });
