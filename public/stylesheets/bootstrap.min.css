@@ -1,5 +1,5 @@
 body {
-  background: url("/img/frontpagebfh_cityonly.png") no-repeat center fixed;
+  background: url("/img/bfhfrontpage2.png") center top fixed no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -8,38 +8,46 @@ body {
   font-family: 'Ubuntu', sans-serif;
 }
 
-#user-view {
-  background: url("/img/frontpagebfh_title.png") no-repeat;
-}
 
 .newPlaylist {
   width: 500px;
-  min-height: 100px;
+  min-height: 50px;
   height: auto;
   padding: 10px 10px;
   overflow: auto;
-  margin: 0 auto;
+  margin: 10% auto auto auto;
   background: rgba(0,0,0,.4);
-  display: inline-block;
   text-align: center;
 
 }
+
+h2 {
+  display: inline-block;
+  margin-left: .25em;
+  margin-right: .25em;
+}
+
+#city-Name {
+  display: inline-block;
+  margin-right: .25em;
+}
+
+
 /*fancy button*/
 #saveCity {
-  display: block;
+  float: right;
+  margin-top: 2%;
+  margin-left: .25em;
+  margin-right: .25em;
   background-color: #f7f7f7;
-  /*background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
   background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
   color: #a7a7a7;
-  */
-  margin: 10px auto 10px auto;
   width: 44px;
   height: 44px;
-  position: relative;
-  text-align: center;
   line-height: 44px;
   border-radius: 50%;
   box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
@@ -49,6 +57,25 @@ body {
   width: 80%;
   height: 80%;
   margin: 10% auto;
+}
+
+#logout {
+  float: right;
+  margin-top: 2%;
+  margin-left: .5em;
+  margin-right: .25em;
+  background-color: #f7f7f7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
+  color: #a7a7a7;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+  text-align: center;
 }
 
 #CreateTracksContainer {
@@ -144,12 +171,4 @@ body {
   padding: 10px 10px;
   border: solid 2px black;
 }
-#logout {
-  float: right;
-}
-#saveBtn {
-  margin-bottom: 7%;
-}
-button {
-  margin: 20px 20px;
-}
+

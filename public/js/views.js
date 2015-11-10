@@ -92,11 +92,10 @@ var GUI = (function() { //IIFE for all Views
       var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       this.$el.html(label + cityName + saveCityBtn);
 
-      buttons = '<button id="logout">Logout</button>';
+      buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
       var cityName = '<input type="text" id="city-Name">';
-      var saveCityBtn = '<div id="saveCity">Go!</div>';
-      this.$el.html(label + '<b>' + "City: " + '</b>' + cityName + '</br>' + '</b>' + '</b>' + '<b>' + saveCityBtn + '<b>' + buttons + closeDiv);
+      this.$el.html(label + "City: " + cityName + buttons +saveCityBtn + closeDiv);
     },
 
       logout: function() {
