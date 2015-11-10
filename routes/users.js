@@ -5,7 +5,7 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
-var bcrypt = require('bcryptjs');
+var pwd = require('pwd');
 
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -46,18 +46,18 @@ router.post('/', function(req, res, next) {
       console.log('Username taken');
       res.redirect('/register');
     } else {
-      bcrypt.hash(req.body.password, 12, function(err, hash) {
-      var id = db.post('bfh-users').insert({
+      pwd.hash(req.body.password, function(err, salt, hash) {
+        console.log(hash);
+      var id = db.post('bfh-users',{
         "username": req.body.username,
-        "password": req.body.password,
-         hash: hash
+        "password": hash,
+        "salt": salt
       })
-        .returning('id')
         .then(function(result) {
         console.log('Created User Successfully');
         res.redirect('/');
       })
-     });
+     });   
     }
   }).fail(function(err) {
     res.redirect('/');
@@ -65,6 +65,29 @@ router.post('/', function(req, res, next) {
   });
 });
 
+// stores username and password hash/salt in db, then calls mailer
+//   database('person').where({
+//     email: email
+//   }).then(function(result) {
+//     if (result.length !== 0) {
+//       console.error('Email address in use!');
+//       response.redirect('/login'); // we'll want error codes for this
+//     } else {
+//       bcrypt.hash(password, 12, function(err, hash) {
+//         var id = database('person').insert({ 
+//           email: email, 
+//           hash: hash })
+//           .returning('id') // required for psql
+//           // generate nonce & send confirmation email
+//           .then(function(id) {
+//             mailer({ email: email, nonce: nonce, id: id });
+//             response.redirect('/newuser');
+//           });
+//       });
+//     }
+//   });
+// });
+// ​
 
   ////////////////////////////////////////////////////////////////////////////////
   // Will use this edit user route once all other routes are working
