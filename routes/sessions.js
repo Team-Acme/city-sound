@@ -4,6 +4,8 @@ var config = require('../config');
 var orch = require('orchestrate');
 var db = orch(config.dbkey);
 var router = express.Router();
+var pwd = require('pwd');
+
 
 router.use(bodyParser.urlencoded({ extended: false }));
 
@@ -29,23 +31,34 @@ router.get('/', loggedIn, function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   db.search('bfh-users', 'value.username: ' + req.body.username).then(function (result) {
-    if (result.body.results[0].value.password === req.body.password) {
-      console.log("this is password:" + result.body.results[0].value.password);
-      console.log("this is password:" + req.body.password);
-      req.session.user = result.body.results[0].value;
-      req.session.key = result.body.results[0].path.key;
-      res.redirect('/posts/main');
-      res.render('main', { user: req.session.user, stylesheet: '/stylesheets/bootstrap.min.css' });
-  
-    } else {
-      console.log('Username or password incorrect');
-      res.render('login', { stylesheet: '/stylesheets/login.css' });
-    }
+    console.log("user found");
+    console.log(req.body.username);
+    console.log(result.body.results);
+    var storedhash = result.body.results[0].value.password;
+    var salt = result.body.results[0].value.salt;
+    pwd.hash(req.body.password, salt, function(err, hash){
+      if (err){
+        console.log(err);
+      }
+      if (storedhash === hash) {
+        // console.log("this is password:" + result.body.results[0].value.password);
+        // console.log("this is password:" + req.body.password);
+        console.log("this is successful");
+        req.session.user = result.body.results[0].value;
+        req.session.key = result.body.results[0].path.key;
+        res.redirect('/posts/main');
+        res.render('main', { user: req.session.user, stylesheet: '/stylesheets/bootstrap.min.css' });
+      } else {
+        console.log('Username or password incorrect');
+        res.render('login', { stylesheet: '/stylesheets/login.css' });
+      }
+    })
   }).fail(function(err) {
+    console.log(err);
     // res.send(err);
     res.redirect('/');
   })
-});
+  });
 
 router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
