@@ -54,13 +54,12 @@ var GUI = (function() { //IIFE for all Views
     NewPLaylistView = Backbone.View.extend({
     className: 'newPlaylist',
     initialize: function() {
-      this.listenTo(app.tracks, 'click', this.render);
+      this.listenTo(app.tracks, 'change', this.render);
     },
 
     events: {
-      "click #saveCity": "appAppear",
-      // "this.listenTo(cityName, 'update', this.render);"
-
+      // "click #saveCity": "appAppear",
+      "change #citiesList": "appAppear",
       "click #logout": "logout"
     },
 
@@ -82,16 +81,30 @@ var GUI = (function() { //IIFE for all Views
       $("#app").append(newUserView.$el);
       // $("#newPlaylist").append(newNewPlaylistView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
+      loadPlaylist();
       $("#lists").append(newNamedPlaylistsView.$el);
+    },
+
+    loadPlaylist: function() {
+      var cityPlaylists = [];
+      var selectedPlaylist = '';
+      // get playlists from bfh-curated.URL using cityName.val() as a parameter
+      // add to cityPlaylists array
+      // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
+
+
+      SC.oEmbed(selectedPlaylist, {
+          element: document.getElementById('playerGoesHere')
+      });
     },
 
     render: function() {
       label = '<h2>Bands from where?  City:</h2>';
       console.log("NamedPlaylistView render is listening");
-
       // this.$el.html(label);
 
-      var cityName = '<select class="citiesList"><option value=""></option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
+
+      var cityName = '<select id="citiesList"><option value=""></option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
