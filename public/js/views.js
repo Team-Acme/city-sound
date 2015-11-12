@@ -63,6 +63,20 @@ var GUI = (function() { //IIFE for all Views
       "click #logout": "logout"
     },
 
+      loadPlaylist: function() {
+      console.log("this is the city" + cityName.val());
+      var cityPlaylists = [];
+      var selectedPlaylist = '';
+      // get playlists from bfh-curated.URL using cityName.val() as a parameter
+      // add to cityPlaylists array
+      // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
+
+
+      SC.oEmbed(selectedPlaylist, {
+          element: document.getElementById('playerGoesHere')
+      });
+    },
+
     appAppear: function() {
       var user = $("#saveCity").val();
       app.currentUser = user;
@@ -81,11 +95,12 @@ var GUI = (function() { //IIFE for all Views
       $("#app").append(newUserView.$el);
       // $("#newPlaylist").append(newNewPlaylistView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
-      loadPlaylist();
+      this.loadPlaylist();
       $("#lists").append(newNamedPlaylistsView.$el);
     },
 
     loadPlaylist: function() {
+      console.log("this is the city" + $("#citiesList").val());
       var cityPlaylists = [];
       var selectedPlaylist = '';
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
