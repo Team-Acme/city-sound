@@ -14,7 +14,7 @@ var users = require('./routes/users');
 var sessionRoutes = require('./routes/sessions');
 var userRoutes = require('./routes/users');
 var postRoutes = require('./routes/posts');
-var bcrypt = require('bcryptjs');
+var pwd = require('pwd');
 var app = express();
 //===============PASSPORT===============
 
