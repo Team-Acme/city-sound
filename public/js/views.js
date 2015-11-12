@@ -88,11 +88,13 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
-      var cityName = '<select id="citiesList"><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
-      var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
+
+
+      var cityName = '<select class="citiesList"><option value=""></option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
+      //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(label + "City: " + cityName + buttons +saveCityBtn + closeDiv);
+      this.$el.html(label + "City: " + cityName + buttons + closeDiv);
     },
 
       logout: function() {
@@ -135,10 +137,11 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>Save Your Playlist</h2>';
       console.log(" SoundCloudView render is listening");
       this.$el.html(label);
+      var playerDiv = '<div id="playerGoesHere"></div>'
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
-      var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">Save</button>';
+      var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/78115793&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
-      this.$el.html(tracksPlayer + label + '<b>' + "Playlist Title: " + '</b>' + saveCurrentPlaylist + '</br>' + '</b>' + '</b>' + '<b>' + saveCurrentPlaylistBtn);
+      this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
     },
 
     events: {
