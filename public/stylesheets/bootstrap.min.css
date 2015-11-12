@@ -32,6 +32,12 @@ h2 {
   margin-right: .25em;
 }
 
+select.citySelects {
+  width: 150px;
+  font-size: 1em;
+  font-family: 'Ubuntu';
+  background: white;
+}
 
 /*fancy button*/
 #saveCity {
@@ -176,4 +182,6 @@ h2 {
   text-align: center;
 
 }
+
+
 
