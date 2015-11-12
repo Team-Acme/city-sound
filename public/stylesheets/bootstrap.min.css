@@ -32,7 +32,7 @@ h2 {
   margin-right: .25em;
 }
 
-select.citiesList {
+select.citySelects {
   width: 150px;
   font-size: 1em;
   font-family: 'Ubuntu';
@@ -182,4 +182,6 @@ select.citiesList {
   text-align: center;
 
 }
+
+
 
