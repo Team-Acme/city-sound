@@ -59,6 +59,8 @@ var GUI = (function() { //IIFE for all Views
 
     events: {
       "click #saveCity": "appAppear",
+      // "this.listenTo(cityName, 'update', this.render);"
+
       "click #logout": "logout"
     },
 
@@ -69,16 +71,16 @@ var GUI = (function() { //IIFE for all Views
       newUserView = new UserView({
         model: userModel
       });
-      newNewPlaylistView = new NewPLaylistView();
+      // newNewPlaylistView = new NewPLaylistView();
       newSoundCloudView = new SoundCloudView();
       newNamedPlaylistsView = new NamedPlaylistsView();
       newUserView.render(user);
-      newNewPlaylistView.render();
+      // newNewPlaylistView.render();
       newSoundCloudView.render();
       newNamedPlaylistsView.render();
-      $("#app").empty();
+      // $("#app").empty();
       $("#app").append(newUserView.$el);
-      $("#newPlaylist").append(newNewPlaylistView.$el);
+      // $("#newPlaylist").append(newNewPlaylistView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
       $("#lists").append(newNamedPlaylistsView.$el);
     },
@@ -88,6 +90,7 @@ var GUI = (function() { //IIFE for all Views
       console.log("NamedPlaylistView render is listening");
 
       // this.$el.html(label);
+
       var cityName = '<select class="citiesList"><option value=""></option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       var buttons = '<button id="logout">log out</button>';
