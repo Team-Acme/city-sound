@@ -90,11 +90,12 @@ var GUI = (function() { //IIFE for all Views
       console.log("NamedPlaylistView render is listening");
 
       // this.$el.html(label);
-      var cityName = '<select class="citiesList"><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
-      var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
+
+      var cityName = '<select class="citiesList"><option value=""></option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
+      //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(label + "City: " + cityName + buttons +saveCityBtn + closeDiv);
+      this.$el.html(label + "City: " + cityName + buttons + closeDiv);
     },
 
       logout: function() {
