@@ -26,15 +26,6 @@ describe('NewPLaylistView', function() {
   });
 });
 
-// describe('appAppear', function(){
-//   var appear;
-//   before(function() {
-//   appear = new appAppear();
-// });
-//   it('should render method', function() {
-//     expect(appappear).to.respondTo('render');
-//   });
-// });
 describe('logging in', function() {
   var searchView;
   before(function() {
@@ -42,12 +33,12 @@ describe('logging in', function() {
     searchView.render();
   });
   describe('clicking login', function() {
-    before(function (){
-      var $postTitle = searchView.$('#post-title');
-      $postTitle.val('Portland');
+    before(function(){
+      var login = "../views/login.hbs";
+      var appLogin = new '#login';
     });
-    it('renders UserView', function() {
-      expect(searchView.appAppear.callCount,1)
+    it('posts login', function() {
+      expect(POST.appLogin.callCount,1)
     });
     describe('clicking sign up', function() {
       before(function(){
