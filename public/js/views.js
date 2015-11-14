@@ -196,11 +196,13 @@ var GUI = (function() { //IIFE for all Views
       // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
       this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
-      $("#userViewContainer").empty();
-      $("#newPlaylist").empty();
-      $("#soundcloudPlayer").empty();
-      $("#lists").empty();
-      $("#soundcloudContainer").empty();
+      $("#userViewContainer").remove();
+      $("#newPlaylist").remove();
+      $("#soundcloudPlayer").remove();
+      $("#lists").remove();
+      $("#soundcloudContainer").remove();
+      $(".lists").remove();
+      $(".SoundCloudView").remove();
     },
 
     events: {
@@ -214,8 +216,8 @@ var GUI = (function() { //IIFE for all Views
 
       });
       $('#post-title').val('');
-      Hermit.recentPostsView.collection.fetch();
-      Hermit.usersPostsView.collection.fetch();
+      // Hermit.recentPostsView.collection.fetch();
+      // Hermit.usersPostsView.collection.fetch();
     }
   });
 
