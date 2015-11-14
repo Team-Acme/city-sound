@@ -58,7 +58,6 @@ var GUI = (function() { //IIFE for all Views
     },
 
     events: {
-      // "click #saveCity": "appAppear",
       "change #citiesList": "appAppear",
       "click #logout": "logout"
     },
@@ -78,25 +77,36 @@ var GUI = (function() { //IIFE for all Views
     },
 
     appAppear: function() {
+     
+      //Get current city name
+      var thisCity = $("#citiesList").val();
+      var playlistURL;
+      //post request to sessions.js for city playlist URL
+      $.post("/newlist", {city: thisCity}, function(data, status){
+      console.log("status: " + status);
+      //playlistURL is the correct playlist URL for selected city!
+      playlistURL = data.viewResponse.URL;
+      console.log('playlistURL:', playlistURL);
+      });
+
+      //---------------------------------------------------------
+
       var user = $("#saveCity").val();
       app.currentUser = user;
       // userModel = app.users.findWhere({username: user});
       newUserView = new UserView({
         model: userModel
       });
-      // newNewPlaylistView = new NewPLaylistView();
       newSoundCloudView = new SoundCloudView();
       newNamedPlaylistsView = new NamedPlaylistsView();
       newUserView.render(user);
-      // newNewPlaylistView.render();
       newSoundCloudView.render();
       newNamedPlaylistsView.render();
-      // $("#app").empty();
       $("#app").append(newUserView.$el);
-      // $("#newPlaylist").append(newNewPlaylistView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
       this.loadPlaylist();
       $("#lists").append(newNamedPlaylistsView.$el);
+
     },
 
     loadPlaylist: function() {
@@ -128,13 +138,15 @@ var GUI = (function() { //IIFE for all Views
       console.log('heard click on logout');
       $.ajax({
         url: '/logout'
+
       }).done(function(data) {
-        console.log('Successfully Logged Out');
+        
       });
       user = '';
       bio = '';
       key = '';
       window.location = '/';
+      console.log('Successfully Logged Out');
     },
 
     initialize: function() {
@@ -167,7 +179,8 @@ var GUI = (function() { //IIFE for all Views
       var playerDiv = '<div id="playerGoesHere"></div>'
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
-      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/78115793&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
+      // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
+      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?; url=[];color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
       this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
       $("#userViewContainer").empty();
       $("#newPlaylist").empty();
