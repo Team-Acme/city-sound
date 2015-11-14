@@ -67,7 +67,7 @@ function removeTestUser (username, callback) {
     var key = result.body.results[0].path.key;
     db.remove('bfh-users', key)
     .then(function () { callback(); })
-    .fali(callback);
+    .fail(callback);
   })
   .fail(callback);
 };
