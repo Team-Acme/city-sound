@@ -16,6 +16,7 @@ var newSoundCloudView;
 var newNamedPlaylistsView;
 var appAppear;
 
+
 //STOP DELETING STUFF
 var GUI = (function() { //IIFE for all Views
 
@@ -69,7 +70,7 @@ var GUI = (function() { //IIFE for all Views
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
       // add to cityPlaylists array
       // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
-
+       
 
       SC.oEmbed(selectedPlaylist, {
           element: document.getElementById('playerGoesHere')
@@ -77,51 +78,55 @@ var GUI = (function() { //IIFE for all Views
     },
 
     appAppear: function() {
+      var playlistURL;
      
       //Get current city name
       var thisCity = $("#citiesList").val();
-      var playlistURL;
+      // var playlistURL;
       //post request to sessions.js for city playlist URL
       $.post("/newlist", {city: thisCity}, function(data, status){
       console.log("status: " + status);
       //playlistURL is the correct playlist URL for selected city!
       playlistURL = data.viewResponse.URL;
       console.log('playlistURL:', playlistURL);
-      });
 
-      //---------------------------------------------------------
-
+      }).done(function(data){
       var user = $("#saveCity").val();
       app.currentUser = user;
       // userModel = app.users.findWhere({username: user});
       newUserView = new UserView({
         model: userModel
       });
-      newSoundCloudView = new SoundCloudView();
+      newSoundCloudView = new SoundCloudView({playlistURL: playlistURL});
       newNamedPlaylistsView = new NamedPlaylistsView();
       newUserView.render(user);
       newSoundCloudView.render();
       newNamedPlaylistsView.render();
       $("#app").append(newUserView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
-      this.loadPlaylist();
+
       $("#lists").append(newNamedPlaylistsView.$el);
-
-    },
-
-    loadPlaylist: function() {
-      console.log("this is the city" + $("#citiesList").val());
-      var cityPlaylists = [];
-      var selectedPlaylist = '';
-      // get playlists from bfh-curated.URL using cityName.val() as a parameter
-      // add to cityPlaylists array
-      // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
-
-
-      SC.oEmbed(selectedPlaylist, {
-          element: document.getElementById('playerGoesHere')
       });
+
+
+      //---------------------------------------------------------
+
+      
     },
+
+    // loadPlaylist: function() {
+    //   // console.log("this is the city" + $("#citiesList").val());
+    //   // var cityPlaylists = [];
+    //   // var selectedPlaylist = '';
+    //   // // get playlists from bfh-curated.URL using cityName.val() as a parameter
+    //   // // add to cityPlaylists array
+    //   // // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
+
+
+    //   SC.oEmbed(selectedPlaylist, {
+    //       element: document.getElementById('playlistURL')
+    //   });
+    // },
 
     render: function() {
       label = '<h2>Bands from where?</h2>';
@@ -164,8 +169,11 @@ var GUI = (function() { //IIFE for all Views
   var SoundCloudView = Backbone.View.extend({
     className: 'SoundCloudView',
 
-    initalize: function() {
-
+    initialize: function(options) {
+      this.options = options;
+      console.log('171:');
+      console.log(options);
+      _.bindAll(this, 'render');
     },
 
     testFunction: function() {
@@ -180,7 +188,10 @@ var GUI = (function() { //IIFE for all Views
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
-      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?; url=[];color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
+      
+      console.log('192:');
+      console.log(this.options);
+      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?;' + this.options + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
       this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
       $("#userViewContainer").empty();
       $("#newPlaylist").empty();
