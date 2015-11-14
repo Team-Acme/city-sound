@@ -64,7 +64,7 @@ var GUI = (function() { //IIFE for all Views
     },
 
       loadPlaylist: function() {
-      console.log("this is the city" + cityName.val());
+      console.log("this is the city " + cityName.val());
       var cityPlaylists = [];
       var selectedPlaylist = '';
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
@@ -117,8 +117,6 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
-
-
       var cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       var buttons = '<button id="logout">log out</button>';
@@ -171,6 +169,10 @@ var GUI = (function() { //IIFE for all Views
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/78115793&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
       this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
+      $("#userViewContainer").empty();
+      $("#newPlaylist").empty();
+      $("#soundcloudPlayer").empty();
+      $("#lists").empty();
     },
 
     events: {
@@ -224,10 +226,7 @@ var GUI = (function() { //IIFE for all Views
       lists = '<div id="lists"></div>';
       closeDiv = '</div>';
       this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
-    },
 
-    events: {
-      "click #logout": "logout",
     },
 
     initialize: function() {
