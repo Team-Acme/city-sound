@@ -168,6 +168,7 @@ var GUI = (function() { //IIFE for all Views
 
   var SoundCloudView = Backbone.View.extend({
     className: 'SoundCloudView',
+    id: 'soundcloudContainer',
 
     initialize: function(options) {
       this.options = options;
@@ -199,6 +200,7 @@ var GUI = (function() { //IIFE for all Views
       $("#newPlaylist").empty();
       $("#soundcloudPlayer").empty();
       $("#lists").empty();
+      $("#soundcloudContainer").empty();
     },
 
     events: {
