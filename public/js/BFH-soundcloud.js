@@ -10,7 +10,9 @@ SC.initialize({
 ///////////////////////////////////////////////////////////////////////////////
 (function(){
     var widgetIframe = document.getElementById('sc-widget'),
-        widget       = SC.Widget(widgetIframe),
+        widget       = SC.Widget(widgetIframe), //not created yet, so can't find
+        //create iframe and hide it
+        //only load when you have to after the iframe is created
         newSoundUrl = 'http://api.soundcloud.com/tracks/13692671';
 
     widget.bind(SC.Widget.Events.READY, function() {
@@ -30,7 +32,7 @@ SC.initialize({
 //
 //     widget.bind(SC.Widget.Events.READY, function() {
 //       widget.bind(SC.Widget.Events.PLAY, function() {
-//         // get information about currently playing sound
+//         // get information about currently playing sound 
 //         widget.getCurrentSound(function(currentSound) {
 //           console.log('sound ' + currentSound.get('') + 'began to play');
 //         });
