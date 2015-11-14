@@ -24,31 +24,34 @@ describe('NewPLaylistView', function() {
   it('should initialize method', function() {
     expect(newplaylistview).to.respondTo('initialize');
   });
+  describe('clicking logout', function() {
+    before(function() {
+      sinon.stub(newplaylistview, 'logout');
+      var $logout = newplaylistview.$('#logout');
+      $logout.click();
+    })
+    it('pulls up login page', function() {
+      expect('/login'.callCount,1)
+    });
 });
-
-describe('logging in', function() {
-  var searchView;
-  before(function() {
-    searchView = new UserView;
-    searchView.render();
-  });
-  describe('clicking login', function() {
-    before(function(){
-      var login = "../views/login.hbs";
-      var appLogin = new '#login';
-    });
-    it('posts login', function() {
-      expect(POST.appLogin.callCount,1)
-    });
-    describe('clicking sign up', function() {
-      before(function(){
-        sinon.stub(searchView, 'appAppear');
-        var $saveCity = searchView.$('#saveCity');
-        $saveCity.click();
-      });
-      it('renders UserView', function() {
-        expect(searchView.appAppear.callCount,1)
-      });
-    });
-  });
 });
+//   describe('clicking login', function() {
+//     before(function(){
+//       var login = "../views/login.hbs";
+//       var appLogin = new '#login';
+//     });
+//     it('posts login', function() {
+//       expect(POST.appLogin.callCount,1)
+//     });
+//     describe('clicking sign up', function() {
+//       before(function(){
+//         sinon.stub(searchView, 'appAppear');
+//         var $saveCity = searchView.$('#saveCity');
+//         $saveCity.click();
+//       });
+//       it('renders UserView', function() {
+//         expect(searchView.appAppear.callCount,1)
+//       });
+//     });
+//   });
+//});
