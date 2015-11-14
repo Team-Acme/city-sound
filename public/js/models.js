@@ -12,7 +12,6 @@ var BFHModels = (function() {
   var PostModel = Backbone.Model.extend({
     idAttribute: 'key',
     defaults:{
-      timestamp: '',
       title:'',
       author:''
     }

@@ -41,8 +41,6 @@ router.post('/', function(req, res, next) {
         console.log(err);
       }
       if (storedhash === hash) {
-        // console.log("this is password:" + result.body.results[0].value.password);
-        // console.log("this is password:" + req.body.password);
         console.log("this is successful");
         req.session.user = result.body.results[0].value;
         req.session.key = result.body.results[0].path.key;
@@ -55,7 +53,6 @@ router.post('/', function(req, res, next) {
     })
   }).fail(function(err) {
     console.log(err);
-    // res.send(err);
     res.redirect('/');
   })
   });
@@ -64,6 +61,25 @@ router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
     if (err) res.send(err);
   })
+});
+
+//------------------------------------------------
+router.post('/newlist', function(req, res, next) {
+
+  //City name from data sent from client
+  var thisCity = req.body.city
+  var viewResponse;
+
+  db.list('bfh-curated').then(function(result) {
+    for (var i = 0; i < result.body.results.length; i++) {
+      if(thisCity == result.body.results[i].value.city){
+          viewResponse = result.body.results[i].value;
+      }     
+    }
+        res.send({viewResponse: viewResponse});
+
+  })
+  console.log('viewResponse', viewResponse);
 });
 
 module.exports = router;

@@ -24,14 +24,24 @@ router.get('/main', requireSession, function(req, res) {
   res.render('main', { title: 'Discover Bands From Here!', user: req.session.user, stylesheet: '/stylesheets/main.css' });
 });
 
-router.get('/', requireSession, function(req, res, next) {
-  db.list('bfh-playlists').then(function(result) {
-    var playlists = [];
-    for (var i = 0; i < result.body.results.length; i++) {
-      playlists.push(result.body.results[i].value)
-    }
-    res.send(playlists);
-  })
+//NOTES FOR getting curated lists
+////////////////////////////////////////////////////////////////////////////////
+//The db is being searched to see if 
+
+///////////////////////////////////////////////////////////////////////////////
+
+router.get('/newlist', function(req, res, next) {
+  console.log("newlist");
+  // db.list('bfh-curated').then(function(result) {
+  //   var playlists = [];
+  //   for (var i = 0; i < result.body.results.length; i++) {
+  //     if (("#citiesList").val() === result.body.city){
+  //     playlists.push(result.body.results[i].value)
+  //    }
+  //   }
+  //   res.send(playlists);
+  // })
+res.send('something');
 });
 
 router.post('/', requireSession, function(req, res, next) {

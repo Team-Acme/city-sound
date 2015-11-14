@@ -1,6 +1,6 @@
 
 body {
-  background: url("/img/bfhfrontpage2.png") center top fixed no-repeat;
+  background: url("/img/frontpagebfh_lower_mnstr.png") center top fixed no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -16,7 +16,7 @@ body {
 }
 
 #loginbox {
-  margin: 10% auto auto auto;
+  margin: 5% auto auto auto;
   width: 300px;
   height: 200px;
   /*border-radius: 3%;*/

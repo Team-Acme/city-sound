@@ -40,6 +40,7 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+  console.log("trying to register");
   var usernameAvailable = true;
   db.search('bfh-users', 'value.username: ' + req.body.username).then(function (result) {
     if (result.body.count > 0) {
@@ -64,30 +65,6 @@ router.post('/', function(req, res, next) {
     // res.send(err);
   });
 });
-
-// stores username and password hash/salt in db, then calls mailer
-//   database('person').where({
-//     email: email
-//   }).then(function(result) {
-//     if (result.length !== 0) {
-//       console.error('Email address in use!');
-//       response.redirect('/login'); // we'll want error codes for this
-//     } else {
-//       bcrypt.hash(password, 12, function(err, hash) {
-//         var id = database('person').insert({
-//           email: email,
-//           hash: hash })
-//           .returning('id') // required for psql
-//           // generate nonce & send confirmation email
-//           .then(function(id) {
-//             mailer({ email: email, nonce: nonce, id: id });
-//             response.redirect('/newuser');
-//           });
-//       });
-//     }
-//   });
-// });
-// ​
 
   ////////////////////////////////////////////////////////////////////////////////
   // Will use this edit user route once all other routes are working
