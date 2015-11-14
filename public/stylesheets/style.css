@@ -16,3 +16,7 @@ footer {
     width: 100%;
     background: black;
 }
+
+#userViewContainer {
+  margin-top: 0; /*reduced gap between city dropdown and player*/
+}
