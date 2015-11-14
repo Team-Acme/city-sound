@@ -66,7 +66,7 @@ var GUI = (function() { //IIFE for all Views
       loadPlaylist: function() {
       console.log("this is the city " + cityName.val());
       var cityPlaylists = [];
-      var selectedPlaylist = '';
+      // var selectedPlaylist = this.options.playlistURL;
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
       // add to cityPlaylists array
       // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
@@ -87,7 +87,7 @@ var GUI = (function() { //IIFE for all Views
       $.post("/newlist", {city: thisCity}, function(data, status){
       console.log("status: " + status);
       //playlistURL is the correct playlist URL for selected city!
-      playlistURL = data.viewResponse.URL;
+      playlistURL = data.viewResponse.playlistID;
       console.log('playlistURL:', playlistURL);
 
       }).done(function(data){
@@ -105,6 +105,7 @@ var GUI = (function() { //IIFE for all Views
       $("#app").append(newUserView.$el);
       $("#soundcloudPlayer").append(newSoundCloudView.$el);
       $("#lists").append(newNamedPlaylistsView.$el);
+      // this.loadPlaylist();
       });
 
 
@@ -190,7 +191,9 @@ var GUI = (function() { //IIFE for all Views
       
       console.log('192:');
       console.log(this.options);
-      tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?;url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
+      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
+      // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
+      // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
       this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
       $("#userViewContainer").empty();
       $("#newPlaylist").empty();
