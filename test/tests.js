@@ -37,37 +37,20 @@ describe('NewPLaylistView', function() {
   describe('selecting city', function () {
     var newplaylistview;
     before(function() {
+      sinon.stub(NewPLaylistView.prototype, 'appAppear');
       newplaylistview = new NewPLaylistView();
+      newplaylistview.render();
     });
     before(function() {
-      sinon.stub(newplaylistview, 'appAppear');
       var $citieslist = newplaylistview.$('#citiesList');
       console.log($citieslist);
-      console.log($citieslist.children('option').length)//.get(1).select();
-      console.log(newplaylistview);
+      $citieslist.change();
     })
+    after(function () {
+      NewPLaylistView.prototype.appAppear.restore()
+    });
     it('pulls up player', function() {
-      expect(newplaylistview.appAppear.callCount).to.eq(1);
+      expect(NewPLaylistView.prototype.appAppear.callCount).to.eq(1);
     })
   })
 });
-//   describe('clicking login', function() {
-//     before(function(){
-//       var login = "../views/login.hbs";
-//       var appLogin = new '#login';
-//     });
-//     it('posts login', function() {
-//       expect(POST.appLogin.callCount,1)
-//     });
-//     describe('clicking sign up', function() {
-//       before(function(){
-//         sinon.stub(searchView, 'appAppear');
-//         var $saveCity = searchView.$('#saveCity');
-//         $saveCity.click();
-//       });
-//       it('renders UserView', function() {
-//         expect(searchView.appAppear.callCount,1)
-//       });
-//     });
-//   });
-//});
