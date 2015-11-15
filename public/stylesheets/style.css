@@ -1,6 +1,6 @@
 body {
   background color: #00B7FF;
-  padding: 50px;
+  padding: 10%;
   font-family: 'Ubuntu', sans-serif;
 }
 
@@ -17,6 +17,3 @@ footer {
     background: black;
 }
 
-#userViewContainer {
-  margin-top: 0; /*reduced gap between city dropdown and player*/
-}
