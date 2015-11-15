@@ -38,7 +38,7 @@ db.deleteCollection('bfh-playlists').then(function() {
   db.post('bfh-playlists', {  
     title:'Portland',
     author:'Anastasia',
-    url: ""
+    url:''
   }).then(function(result) {
     console.log('Post created with id: ' + result.path.key);
   });
@@ -46,7 +46,7 @@ db.deleteCollection('bfh-playlists').then(function() {
   db.post('bfh-playlists', {
     title:'Cleveland',
     author:'Elizabeth',
-    url: ""
+    url:''
   }).then(function(result) {
     console.log('Post created with id: ' + result.path.key);
   });
@@ -54,7 +54,7 @@ db.deleteCollection('bfh-playlists').then(function() {
     db.post('bfh-playlists', {
     title:'Sacramento',
     author:'Molly',
-    url: ""
+    url: ''
   }).then(function(result) {
     console.log('Post created with id: ' + result.path.key);
   });
@@ -62,7 +62,7 @@ db.deleteCollection('bfh-playlists').then(function() {
     db.post('bfh-playlists', {
     title:'Minneapolis',
     author:'Chad',
-    url: ""
+    url: ''
   }).then(function(result) {
     console.log('Post created with id: ' + result.path.key);
   }); 
