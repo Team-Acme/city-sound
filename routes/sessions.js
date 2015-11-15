@@ -21,7 +21,7 @@ function loggedIn(req, res, next) {
 ////////////////////////////////////////////////////////////////////////////////
 //The "login.hbs" renders at "/"
 //When users enter username and password and push login the db serches usernames
-//If username and password match in db, the '/posts/main' 
+//If username and password match in db, the '/posts/main'
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -68,18 +68,20 @@ router.post('/newlist', function(req, res, next) {
 
   //City name from data sent from client
   var thisCity = req.body.city
-  var viewResponse;
+  var viewResponse = [];
 
   db.list('bfh-curated').then(function(result) {
     for (var i = 0; i < result.body.results.length; i++) {
       if(thisCity == result.body.results[i].value.city){
-          viewResponse = result.body.results[i].value;
-      }     
+          viewResponse.push(result.body.results[i].value);
+          // console.log("Playlist id's for " + thisCity + ": " + viewResponse);
+      }
     }
+        console.log(viewResponse);
         res.send({viewResponse: viewResponse});
 
   })
-  console.log('viewResponse', viewResponse);
+  // console.log('viewResponse', viewResponse);
 });
 
 module.exports = router;

@@ -70,7 +70,7 @@ var GUI = (function() { //IIFE for all Views
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
       // add to cityPlaylists array
       // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
-       
+
 
       SC.oEmbed(selectedPlaylist, {
           element: document.getElementById('playerGoesHere')
@@ -79,16 +79,17 @@ var GUI = (function() { //IIFE for all Views
 
     appAppear: function() {
       var playlistURL;
-     
+
       //Get current city name
       var thisCity = $("#citiesList").val();
       // var playlistURL;
       //post request to sessions.js for city playlist URL
       $.post("/newlist", {city: thisCity}, function(data, status){
       console.log("status: " + status);
-      //playlistURL is the correct playlist URL for selected city!
-      playlistURL = data.viewResponse.playlistID;
-      console.log('playlistURL:', playlistURL);
+      console.log("response: ", data.viewResponse);
+      var randPlaylist = data.viewResponse[Math.floor(Math.random() * data.viewResponse.length)];
+      playlistURL = randPlaylist.playlistID; //data.viewResponse.playlistID;
+      console.log('playlistURL: ', playlistURL);
 
       }).done(function(data){
       var user = $("#saveCity").val();
@@ -111,7 +112,7 @@ var GUI = (function() { //IIFE for all Views
 
       //---------------------------------------------------------
 
-      
+
     },
 
     // loadPlaylist: function() {
@@ -145,7 +146,7 @@ var GUI = (function() { //IIFE for all Views
         url: '/logout'
 
       }).done(function(data) {
-        
+
       });
       user = '';
       bio = '';
@@ -189,7 +190,7 @@ var GUI = (function() { //IIFE for all Views
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
-      
+
       console.log('192:');
       console.log(this.options);
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
