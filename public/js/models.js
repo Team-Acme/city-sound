@@ -13,7 +13,8 @@ var BFHModels = (function() {
     idAttribute: 'key',
     defaults:{
       title:'',
-      author:''
+      author:'',
+      url:''
     }
   });
 

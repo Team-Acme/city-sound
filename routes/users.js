@@ -66,6 +66,16 @@ router.post('/', function(req, res, next) {
   });
 });
 
+router.post('/', requireSession, function(req, res, next) {
+  db.post('bfh-playlists', {
+    "title": req.body.title,
+    "author": req.body.author,
+    "url": this.options.playlistURL
+  }).then(function(result) {
+    console.log('Posted');
+  });
+});
+
   ////////////////////////////////////////////////////////////////////////////////
   // Will use this edit user route once all other routes are working
 
