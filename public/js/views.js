@@ -85,10 +85,13 @@ var GUI = (function() { //IIFE for all Views
       // var playlistURL;
       //post request to sessions.js for city playlist URL
       $.post("/newlist", {city: thisCity}, function(data, status){
-      // console.log("status: " + status);
-      //playlistURL is the correct playlist URL for selected city!
-      playlistURL = data.viewResponse.playlistID;
-      // console.log('playlistURL:', playlistURL);
+
+      console.log("status: " + status);
+      console.log("response: ", data.viewResponse);
+      var randPlaylist = data.viewResponse[Math.floor(Math.random() * data.viewResponse.length)];
+      playlistURL = randPlaylist.playlistID; //data.viewResponse.playlistID;
+      console.log('playlistURL: ', playlistURL);
+
 
       }).done(function(data){
       var user = $("#saveCity").val();
@@ -145,15 +148,17 @@ var GUI = (function() { //IIFE for all Views
     //   $.ajax({
     //     url: '/logout'
 
-    //   }).done(function(data) {
 
-    //   });
-    //   user = '';
-    //   bio = '';
-    //   key = '';
-    //   window.location = '/';
-    //   console.log('Successfully Logged Out');
-    // },
+      }).done(function(data) {
+
+      });
+      user = '';
+      bio = '';
+      key = '';
+      window.location = '/';
+      console.log('Successfully Logged Out');
+    },
+
 
     initialize: function() {
 
@@ -190,9 +195,15 @@ var GUI = (function() { //IIFE for all Views
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
+<<<<<<< HEAD
+
+      console.log('192:');
+      console.log(this.options);
+=======
       // console.log('192:');
       // console.log(this.options);
 
+>>>>>>> master
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
