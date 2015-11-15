@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha test/app"
+    "test:server": "mocha test/app",
+    "test:client": "karma start karma.conf --single-run",
+    "test": "npm run test:server && npm run test:client"
   },
   "dependencies": {
     "backbone": "~1.2.3",
@@ -29,6 +31,13 @@
     "sinon": "^1.17.2"
   },
   "devDependencies": {
+    "jquery": "^2.1.4",
+    "karma": "^0.13.15",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-mocha": "^0.2.1",
+    "karma-sinon": "^1.0.4",
+    "lodash": "^3.10.1",
     "supertest-session": "^2.0.0"
   }
 }
