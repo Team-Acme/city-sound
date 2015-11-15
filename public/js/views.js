@@ -59,12 +59,12 @@ var GUI = (function() { //IIFE for all Views
     },
 
     events: {
-      "change #citiesList": "appAppear",
-      "click #logout": "logout"
+      "change #citiesList": "appAppear"
+      // "click #logout": "logout"
     },
 
       loadPlaylist: function() {
-      console.log("this is the city " + cityName.val());
+      // console.log("this is the city " + cityName.val());
       var cityPlaylists = [];
       // var selectedPlaylist = this.options.playlistURL;
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
@@ -85,11 +85,13 @@ var GUI = (function() { //IIFE for all Views
       // var playlistURL;
       //post request to sessions.js for city playlist URL
       $.post("/newlist", {city: thisCity}, function(data, status){
+
       console.log("status: " + status);
       console.log("response: ", data.viewResponse);
       var randPlaylist = data.viewResponse[Math.floor(Math.random() * data.viewResponse.length)];
       playlistURL = randPlaylist.playlistID; //data.viewResponse.playlistID;
       console.log('playlistURL: ', playlistURL);
+
 
       }).done(function(data){
       var user = $("#saveCity").val();
@@ -99,6 +101,7 @@ var GUI = (function() { //IIFE for all Views
         model: userModel
       });
       newSoundCloudView = new SoundCloudView({playlistURL: playlistURL});
+
       newNamedPlaylistsView = new NamedPlaylistsView();
       newUserView.render(user);
       newSoundCloudView.render();
@@ -135,15 +138,16 @@ var GUI = (function() { //IIFE for all Views
       // this.$el.html(label);
       var cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
-      var buttons = '<button id="logout">log out</button>';
+      //var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(label + cityName + buttons + closeDiv);
+      this.$el.html(label + cityName + closeDiv);
     },
 
-      logout: function() {
-      console.log('heard click on logout');
-      $.ajax({
-        url: '/logout'
+    //   logout: function() {
+    //   console.log('heard click on logout');
+    //   $.ajax({
+    //     url: '/logout'
+
 
       }).done(function(data) {
 
@@ -154,6 +158,7 @@ var GUI = (function() { //IIFE for all Views
       window.location = '/';
       console.log('Successfully Logged Out');
     },
+
 
     initialize: function() {
 
@@ -173,26 +178,32 @@ var GUI = (function() { //IIFE for all Views
 
     initialize: function(options) {
       this.options = options;
-      console.log('171:');
-      console.log(options);
-      _.bindAll(this, 'render');
+      // console.log('171:');
+      // console.log(options);
+      _.bindAll(this, ['render', "savePost"]);
     },
 
     testFunction: function() {
-      console.log("SoundCloudView function is running");
+      // console.log("SoundCloudView function is running");
     },
 
     render: function() {
       label = '<h2>Save Your Playlist</h2>';
-      console.log(" SoundCloudView render is listening");
+      // console.log(" SoundCloudView render is listening");
       this.$el.html(label);
       var playerDiv = '<div id="playerGoesHere"></div>'
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
+<<<<<<< HEAD
 
       console.log('192:');
       console.log(this.options);
+=======
+      // console.log('192:');
+      // console.log(this.options);
+
+>>>>>>> master
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
@@ -210,15 +221,22 @@ var GUI = (function() { //IIFE for all Views
       'click #CurrentPlaylistBtn': 'savePost'
     },
 
-    savePost: function() {
-      var postAdded = this.collection.create({
-        title: $('#post-title').val(),
-        author: user,
 
-      });
-      $('#post-title').val('');
-      // Hermit.recentPostsView.collection.fetch();
-      // Hermit.usersPostsView.collection.fetch();
+
+    savePost: function() {
+      console.log("heard click on save in savePost");
+      var saveTitle = $('#currentPlaylist').val();
+      console.log("savepost " + this.options.playlistURL);
+      $.post("/savelist", {
+          title: $('#currentPlaylist').val(),
+          author: user,
+
+          url: this.options.playlistURL}, function(data, status){
+        console.log("status: " + status);
+
+        $('#currentPlaylist').val('');
+        GUI.NamedPlaylistsView.collection.fetch();
+    });
     }
   });
 
@@ -235,7 +253,7 @@ var GUI = (function() { //IIFE for all Views
 
     render: function() {
       label = '<h2>My Playlists</h2>';
-      console.log("NamedPlaylistsView render is listening");
+      // console.log("NamedPlaylistsView render is listening");
       this.$el.html(label);
     }
 
@@ -255,14 +273,34 @@ var GUI = (function() { //IIFE for all Views
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
       lists = '<div id="lists"></div>';
+      buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
+      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + buttons + closeDiv);
 
+    },
+
+    logout: function() {
+      console.log('heard click on logout');
+      $.ajax({
+        url: '/logout'
+
+      }).done(function(data) {
+
+      });
+      user = '';
+      bio = '';
+      key = '';
+      window.location = '/';
+      console.log('Successfully Logged Out');
     },
 
     initialize: function() {
 
     },
+
+    events: {
+      "click #logout": "logout"
+    }
 
 
   });

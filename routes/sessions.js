@@ -6,12 +6,22 @@ var db = orch(config.dbkey);
 var router = express.Router();
 var pwd = require('pwd');
 
-
 router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+
 
 function loggedIn(req, res, next) {
   if (req.session.user) {
     res.redirect('/posts/main');
+  } else {
+    next();
+  }
+}
+
+// requires a user to be logged in
+function requireSession(req, res, next) {
+  if (!req.session.user) {
+    res.redirect('/');
   } else {
     next();
   }
@@ -82,6 +92,19 @@ router.post('/newlist', function(req, res, next) {
 
   })
   // console.log('viewResponse', viewResponse);
+});
+
+//---------------------------------------------------
+
+router.post('/savelist', requireSession, function(req, res, next) {
+   console.log("heard /savelist on the router");
+  db.post('bfh-playlists', {
+    "title": req.body.title,
+    "author": req.body.author,
+    "url": req.body.url
+  }).then(function(result) {
+    console.log('Posted');
+  });
 });
 
 module.exports = router;
