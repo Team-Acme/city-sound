@@ -143,22 +143,6 @@ var GUI = (function() { //IIFE for all Views
       this.$el.html(label + cityName + closeDiv);
     },
 
-    //   logout: function() {
-    //   console.log('heard click on logout');
-    //   $.ajax({
-    //     url: '/logout'
-
-
-      }).done(function(data) {
-
-      });
-      user = '';
-      bio = '';
-      key = '';
-      window.location = '/';
-      console.log('Successfully Logged Out');
-    },
-
 
     initialize: function() {
 
@@ -195,15 +179,6 @@ var GUI = (function() { //IIFE for all Views
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
-<<<<<<< HEAD
-
-      console.log('192:');
-      console.log(this.options);
-=======
-      // console.log('192:');
-      // console.log(this.options);
-
->>>>>>> master
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
       // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
@@ -237,6 +212,9 @@ var GUI = (function() { //IIFE for all Views
         $('#currentPlaylist').val('');
         GUI.NamedPlaylistsView.collection.fetch();
     });
+      var newNamedPlaylistsView = new NamedPlaylistsView();
+      newNamedPlaylistsView.render();
+      $(saveTitle).append(newNamedPlaylistsView.$el);
     }
   });
 
@@ -249,12 +227,16 @@ var GUI = (function() { //IIFE for all Views
 
   var NamedPlaylistsView = Backbone.View.extend({
     className: 'lists',
-    initialize: function() {},
+    initialize: function() {
+         this.listenTo(this.collection, 'update', this.render);
+    },
 
     render: function() {
       label = '<h2>My Playlists</h2>';
-      // console.log("NamedPlaylistsView render is listening");
       this.$el.html(label);
+      var titleContent = $('#currentPlaylist').html();
+      this.$el.html(titleContent);
+      return this;
     }
 
   });
