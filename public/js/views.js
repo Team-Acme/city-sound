@@ -15,6 +15,7 @@ var newUserView;
 var newSoundCloudView;
 var newNamedPlaylistsView;
 var appAppear;
+var cityName;
 
 
 //STOP DELETING STUFF
@@ -136,7 +137,7 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
-      var cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
+      cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       //var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';

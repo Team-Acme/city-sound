@@ -30,10 +30,26 @@ describe('NewPLaylistView', function() {
       var $logout = newplaylistview.$('#logout');
       $logout.click();
     })
-    it('pulls up login page', function() {
+    it('returns to login page', function() {
       expect('/login'.callCount,1)
     });
 });
+  describe('selecting city', function () {
+    var newplaylistview;
+    before(function() {
+      newplaylistview = new NewPLaylistView();
+    });
+    before(function() {
+      sinon.stub(newplaylistview, 'appAppear');
+      var $citieslist = newplaylistview.$('#citiesList');
+      console.log($citieslist);
+      console.log($citieslist.children('option').length)//.get(1).select();
+      console.log(newplaylistview);
+    })
+    it('pulls up player', function() {
+      expect(newplaylistview.appAppear.callCount).to.eq(1);
+    })
+  })
 });
 //   describe('clicking login', function() {
 //     before(function(){
