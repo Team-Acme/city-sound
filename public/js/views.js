@@ -59,8 +59,8 @@ var GUI = (function() { //IIFE for all Views
     },
 
     events: {
-      "change #citiesList": "appAppear",
-      "click #logout": "logout"
+      "change #citiesList": "appAppear"
+      // "click #logout": "logout"
     },
 
       loadPlaylist: function() {
@@ -70,7 +70,7 @@ var GUI = (function() { //IIFE for all Views
       // get playlists from bfh-curated.URL using cityName.val() as a parameter
       // add to cityPlaylists array
       // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
-       
+
 
       SC.oEmbed(selectedPlaylist, {
           element: document.getElementById('playerGoesHere')
@@ -79,7 +79,7 @@ var GUI = (function() { //IIFE for all Views
 
     appAppear: function() {
       var playlistURL;
-     
+
       //Get current city name
       var thisCity = $("#citiesList").val();
       // var playlistURL;
@@ -111,7 +111,7 @@ var GUI = (function() { //IIFE for all Views
 
       //---------------------------------------------------------
 
-      
+
     },
 
     // loadPlaylist: function() {
@@ -134,25 +134,25 @@ var GUI = (function() { //IIFE for all Views
       // this.$el.html(label);
       var cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
-      var buttons = '<button id="logout">log out</button>';
+      //var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(label + cityName + buttons + closeDiv);
+      this.$el.html(label + cityName + closeDiv);
     },
 
-      logout: function() {
-      console.log('heard click on logout');
-      $.ajax({
-        url: '/logout'
+    //   logout: function() {
+    //   console.log('heard click on logout');
+    //   $.ajax({
+    //     url: '/logout'
 
-      }).done(function(data) {
-        
-      });
-      user = '';
-      bio = '';
-      key = '';
-      window.location = '/';
-      console.log('Successfully Logged Out');
-    },
+    //   }).done(function(data) {
+
+    //   });
+    //   user = '';
+    //   bio = '';
+    //   key = '';
+    //   window.location = '/';
+    //   console.log('Successfully Logged Out');
+    // },
 
     initialize: function() {
 
@@ -189,7 +189,7 @@ var GUI = (function() { //IIFE for all Views
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
-      
+
       console.log('192:');
       console.log(this.options);
       tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
@@ -254,14 +254,34 @@ var GUI = (function() { //IIFE for all Views
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
       lists = '<div id="lists"></div>';
+      buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
+      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + buttons + closeDiv);
 
+    },
+
+    logout: function() {
+      console.log('heard click on logout');
+      $.ajax({
+        url: '/logout'
+
+      }).done(function(data) {
+
+      });
+      user = '';
+      bio = '';
+      key = '';
+      window.location = '/';
+      console.log('Successfully Logged Out');
     },
 
     initialize: function() {
 
     },
+
+    events: {
+      "click #logout": "logout"
+    }
 
 
   });
