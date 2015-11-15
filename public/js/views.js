@@ -149,15 +149,15 @@ var GUI = (function() { //IIFE for all Views
     //     url: '/logout'
 
 
-      }).done(function(data) {
-
-      });
-      user = '';
-      bio = '';
-      key = '';
-      window.location = '/';
-      console.log('Successfully Logged Out');
-    },
+    //   }).done(function(data) {
+    //
+    //   });
+    //   user = '';
+    //   bio = '';
+    //   key = '';
+    //   window.location = '/';
+    //   console.log('Successfully Logged Out');
+    // },
 
 
     initialize: function() {
