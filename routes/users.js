@@ -7,7 +7,6 @@ var db = orch(config.dbkey);
 var router = express.Router();
 var pwd = require('pwd');
 
-
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(methodOverride(function(req, res){
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -58,7 +57,7 @@ router.post('/', function(req, res, next) {
         console.log('Created User Successfully');
         res.redirect('/');
       })
-     });   
+     });
     }
   }).fail(function(err) {
     res.redirect('/');
@@ -99,4 +98,3 @@ router.post('/', requireSession, function(req, res, next) {
 
 
 module.exports = router;
-

@@ -17,6 +17,8 @@ var newSoundCloudView;
 var newNamedPlaylistsView;
 var appAppear;
 var ShowListsView
+var cityName;
+
 
 
 //STOP DELETING STUFF
@@ -142,7 +144,7 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
-      var cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
+      cityName = '<select id="citiesList" class="citySelects"><option value="">choose city</option><option value="Portland">Portland</option><option value="Seattle">Seattle</option><option value="Minneapolis">Minneapolis</option><option value="Austin">Austin</option><option value="Cleveland">Cleveland</option></select>';
       //var saveCityBtn = '<div id="saveCity"><img src="/img/monster_black.png"/></div>';
       //var buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
@@ -174,7 +176,7 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-  var SoundCloudView = Backbone.View.extend({
+  SoundCloudView = Backbone.View.extend({
     className: 'SoundCloudView',
     id: 'soundcloudContainer',
 
@@ -309,37 +311,57 @@ var GUI = (function() { //IIFE for all Views
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
       lists = '<div id="lists"></div>';
-      buttons = '<button id="logout">log out</button>';
+      //buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + buttons + closeDiv);
+      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
 
     },
 
-    logout: function() {
-      console.log('heard click on logout');
-      $.ajax({
-        url: '/logout'
+    // logout: function() {
+    //   console.log('heard click on logout');
+    //   $.ajax({
+    //     url: '/logout'
 
-      }).done(function(data) {
+    //   }).done(function(data) {
 
-      });
-      user = '';
-      bio = '';
-      key = '';
-      window.location = '/';
-      console.log('Successfully Logged Out');
-    },
+    //   });
+    //   user = '';
+    //   bio = '';
+    //   key = '';
+    //   window.location = '/';
+    //   console.log('Successfully Logged Out');
+    // },
 
     initialize: function() {
 
     },
 
-    events: {
-      "click #logout": "logout"
-    }
+    // events: {
+    //   "click #logout": "logout"
+    // }
 
 
   });
+
+$( function() {
+  var $el = $('#logout');
+    console.log($el)
+  var logout = function(){
+    console.log('heard click on logout');
+    $.get({
+      url: '/logout'
+      }).done(function(data){
+        window.location = '/';
+        console.log('Successfully Logged Out');
+      });
+    };
+  if ($el){
+    $el.click(logout);
+  } else {
+    console.log('failing quietly')
+  };
+});
+
 
   // generic ctor to represent interface:
   function GUI(users, playlistName, el) {
@@ -347,6 +369,7 @@ var GUI = (function() { //IIFE for all Views
     firstView.render();
     $("#app").append(firstView.$el);
   }
+
 
   return GUI;
 }());

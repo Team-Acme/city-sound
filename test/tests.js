@@ -24,40 +24,42 @@ describe('NewPLaylistView', function() {
   it('should initialize method', function() {
     expect(newplaylistview).to.respondTo('initialize');
   });
+//   describe('clicking logout', function() {
+//     before(function() {
+//       sinon.stub(newplaylistview, 'logout');
+//       var $logout = newplaylistview.$('#logout');
+//       $logout.click();
+//     })
+//     it('returns to login page', function() {
+//       expect('/login'.callCount,1)
+//     });
+// });
+  describe('selecting city', function () {
+    var newplaylistview;
+    before(function() {
+      sinon.stub(NewPLaylistView.prototype, 'appAppear');
+      newplaylistview = new NewPLaylistView();
+      newplaylistview.render();
+    });
+    before(function() {
+      var $citieslist = newplaylistview.$('#citiesList');
+      $citieslist.change();
+    })
+    after(function () {
+      NewPLaylistView.prototype.appAppear.restore()
+    });
+    it('pulls up player', function() {
+      expect(NewPLaylistView.prototype.appAppear.callCount).to.eq(1);
+    })
+  })
 });
 
-// describe('appAppear', function(){
-//   var appear;
-//   before(function() {
-//   appear = new appAppear();
-// });
-//   it('should render method', function() {
-//     expect(appappear).to.respondTo('render');
-//   });
-// });
-describe('logging in', function() {
-  var searchView;
+describe('SoundCloudView', function() {
+  var soundcloudview;
   before(function() {
-    searchView = new UserView;
-    searchView.render();
-  });
-  describe('clicking login', function() {
-    before(function (){
-      var $postTitle = searchView.$('#post-title');
-      $postTitle.val('Portland');
-    });
-    it('renders UserView', function() {
-      expect(searchView.appAppear.callCount,1)
-    });
-    describe('clicking sign up', function() {
-      before(function(){
-        sinon.stub(searchView, 'appAppear');
-        var $saveCity = searchView.$('#saveCity');
-        $saveCity.click();
-      });
-      it('renders UserView', function() {
-        expect(searchView.appAppear.callCount,1)
-      });
-    });
-  });
+  soundcloudview = new SoundCloudView();
 });
+it('should initialize method', function() {
+  expect(soundcloudview).to.respondTo('initialize');
+  })
+})

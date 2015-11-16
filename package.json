@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha test/app"
   },
   "dependencies": {
     "backbone": "~1.2.3",
@@ -26,5 +27,8 @@
     "q": "^1.0.1",
     "serve-favicon": "~2.3.0",
     "sinon": "^1.17.2"
+  },
+  "devDependencies": {
+    "supertest-session": "^2.0.0"
   }
 }

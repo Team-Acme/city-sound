@@ -27,4 +27,8 @@ footer {
   z-index: -1;
   font-family: 'Ubuntu', sans-serif;
   }
+
+  h2 {
+    color: white;
+  }
 }
