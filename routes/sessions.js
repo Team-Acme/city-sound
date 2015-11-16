@@ -107,4 +107,19 @@ router.post('/savelist', requireSession, function(req, res, next) {
   });
 });
 
+
+
+// router.get('/:username', requireSession, function(req, res, next) {
+//   db.list('bfh-playlists').then(function(result) {
+//     var playlists = [];
+//     for (var i = 0; i < result.body.results.length; i++) {
+//       if (result.body.results[i].value.author === req.params.username) {
+//         playlists.push(result.body.results[i].value)
+//       }
+//     }
+//     res.send(playlists)
+//   });
+// });
+
+
 module.exports = router;
