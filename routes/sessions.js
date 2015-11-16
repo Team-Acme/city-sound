@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 // var config = require('../config');
-// var orch = require('orchestrate');
+var orch = require('orchestrate');
 // var db = orch(config.dbkey);
 var router = express.Router();
 var pwd = require('pwd');
