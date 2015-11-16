@@ -44,15 +44,16 @@ router.get('/main', requireSession, function(req, res) {
 // res.send('something');
 // });
 
-// router.post('/', requireSession, function(req, res, next) {
-//   db.post('bfh-playlists', {
-//     "title": req.body.title,
-//     "author": req.body.author,
-//     "timestamp": req.body.timestamp
-//   }).then(function(result) {
-//     console.log('Posted');
-//   });
-// });
+router.get('/', requireSession, function(req, res, next) {
+  console.log('req.body: ', req.body)
+  db.get('bfh-playlists', {
+    "title": req.body.title,
+    "author": req.body.author,
+    "url": this.options.playlistURL
+  }).then(function(result) {
+    console.log('Posted');
+  });
+});
 
 
 router.get('/:username', requireSession, function(req, res, next) {
