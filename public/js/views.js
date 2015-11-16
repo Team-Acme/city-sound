@@ -1,3 +1,4 @@
+
 //GLOBAL VARIABLES FOR TESTING
 var Backbone;
 var WidgetView;

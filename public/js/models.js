@@ -1,4 +1,3 @@
-
 console.log("models.js is loading");
 
 // var BFHModels = (function() {
