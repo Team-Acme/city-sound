@@ -256,37 +256,57 @@ var GUI = (function() { //IIFE for all Views
       newPlaylistCity = '<div id="newPlaylist"></div>';
       soundcloudPlayer = '<div id="soundcloudPlayer"></div>';
       lists = '<div id="lists"></div>';
-      buttons = '<button id="logout">log out</button>';
+      //buttons = '<button id="logout">log out</button>';
       closeDiv = '</div>';
-      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + buttons + closeDiv);
+      this.$el.html(userViewContainer + newPlaylistCity + soundcloudPlayer + lists + closeDiv);
 
     },
 
-    logout: function() {
-      console.log('heard click on logout');
-      $.ajax({
-        url: '/logout'
+    // logout: function() {
+    //   console.log('heard click on logout');
+    //   $.ajax({
+    //     url: '/logout'
 
-      }).done(function(data) {
+    //   }).done(function(data) {
 
-      });
-      user = '';
-      bio = '';
-      key = '';
-      window.location = '/';
-      console.log('Successfully Logged Out');
-    },
+    //   });
+    //   user = '';
+    //   bio = '';
+    //   key = '';
+    //   window.location = '/';
+    //   console.log('Successfully Logged Out');
+    // },
 
     initialize: function() {
 
     },
 
-    events: {
-      "click #logout": "logout"
-    }
+    // events: {
+    //   "click #logout": "logout"
+    // }
 
 
   });
+
+$( function() {
+  var $el = $('#logout');
+    console.log($el)
+  var logout = function(){
+    console.log('heard click on logout');
+    $.get({
+      url: '/logout'
+      }).done(function(data){
+        window.location = '/';
+        console.log('Successfully Logged Out');
+      });
+    };
+  if ($el){
+    $el.click(logout);
+  } else {
+    console.log('failing quietly')
+  };
+});
+
 
   // generic ctor to represent interface:
   function GUI(users, playlistName, el) {
@@ -294,6 +314,7 @@ var GUI = (function() { //IIFE for all Views
     firstView.render();
     $("#app").append(firstView.$el);
   }
+
 
   return GUI;
 }());

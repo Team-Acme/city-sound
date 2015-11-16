@@ -22,10 +22,13 @@ body {
 }
 
 h2 {
+  color: black;
   display: inline-block;
   margin-left: .25em;
   margin-right: .25em;
 }
+
+
 
 #city-Name {
   display: inline-block;
@@ -184,9 +187,11 @@ select.citySelects {
 }
 
 /* Smartphones (portrait and landscape) ----------- */
-@media (max-width : 500px) {
+@media (max-width : 600px) {
 
 /* Styles */
+
+
   .newPlaylist {
     width: 100%;
     margin: 10% auto auto auto;
@@ -200,18 +205,22 @@ select.citySelects {
     width: 100%;
     margin: auto auto 10% auto;
     padding: 0px;
+    background: none;
 
 
   }
   #widgetContainer{
     width: 100%;
+    background: rgba(255,255,255,.4);
   }
 
   #soundcloudPlayer {
     width: 100%;
+    background: rgba(255,255,255,.4);
   }
   #lists {
     width: 100%;
+    background: rgba(255,255,255,.4);
   }
 
 
