@@ -16,6 +16,7 @@ var newSoundCloudView;
 var newNamedPlaylistsView;
 var appAppear;
 var cityName;
+var SoundCloutView;
 
 
 //STOP DELETING STUFF
@@ -157,7 +158,7 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-  var SoundCloudView = Backbone.View.extend({
+  SoundCloudView = Backbone.View.extend({
     className: 'SoundCloudView',
     id: 'soundcloudContainer',
 
