@@ -30,32 +30,34 @@ router.get('/main', requireSession, function(req, res) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-router.get('/newlist', function(req, res, next) {
-  console.log("newlist");
-  // db.list('bfh-curated').then(function(result) {
-  //   var playlists = [];
-  //   for (var i = 0; i < result.body.results.length; i++) {
-  //     if (("#citiesList").val() === result.body.city){
-  //     playlists.push(result.body.results[i].value)
-  //    }
-  //   }
-  //   res.send(playlists);
-  // })
-res.send('something');
-});
+// router.get('/newlist', function(req, res, next) {
+//   console.log("newlist");
+//   // db.list('bfh-curated').then(function(result) {
+//   //   var playlists = [];
+//   //   for (var i = 0; i < result.body.results.length; i++) {
+//   //     if (("#citiesList").val() === result.body.city){
+//   //     playlists.push(result.body.results[i].value)
+//   //    }
+//   //   }
+//   //   res.send(playlists);
+//   // })
+// res.send('something');
+// });
 
-router.post('/', requireSession, function(req, res, next) {
-  db.post('bfh-playlists', {
-    "title": req.body.title,
-    "author": req.body.author,
-    "timestamp": req.body.timestamp
-  }).then(function(result) {
-    console.log('Posted');
-  });
-});
+// router.post('/', requireSession, function(req, res, next) {
+//   db.post('bfh-playlists', {
+//     "title": req.body.title,
+//     "author": req.body.author,
+//     "timestamp": req.body.timestamp
+//   }).then(function(result) {
+//     console.log('Posted');
+//   });
+// });
 
 
 router.get('/:username', requireSession, function(req, res, next) {
+  console.log(req.params.username)
+  console.log('%j',req.params.username)
   db.list('bfh-playlists').then(function(result) {
     var playlists = [];
     for (var i = 0; i < result.body.results.length; i++) {
@@ -63,7 +65,7 @@ router.get('/:username', requireSession, function(req, res, next) {
         playlists.push(result.body.results[i].value)
       }
     }
-    res.send(playlists.slice(-3));
+    res.send(JSON.stringify(playlists));
   });
 });
 
