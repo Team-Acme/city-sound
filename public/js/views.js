@@ -15,6 +15,7 @@ var newUserView;
 var newSoundCloudView;
 var newNamedPlaylistsView;
 var appAppear;
+var ShowListsView
 
 
 //STOP DELETING STUFF
@@ -59,7 +60,8 @@ var GUI = (function() { //IIFE for all Views
     },
 
     events: {
-      "change #citiesList": "appAppear"
+      "change #citiesList": "appAppear",
+      "update this.collection": 'render'
       // "click #logout": "logout"
     },
 
@@ -78,6 +80,7 @@ var GUI = (function() { //IIFE for all Views
     },
 
     appAppear: function() {
+      var self = this;
       var playlistURL;
 
       //Get current city name
@@ -94,22 +97,23 @@ var GUI = (function() { //IIFE for all Views
 
 
       }).done(function(data){
-      var user = $("#saveCity").val();
-      app.currentUser = user;
-      // userModel = app.users.findWhere({username: user});
-      newUserView = new UserView({
-        model: userModel
-      });
-      newSoundCloudView = new SoundCloudView({playlistURL: playlistURL});
+        var saved = $("#saveCity").val();
+        app.currentUser = saved;
+        // userModel = app.users.findWhere({username: user});
+        newUserView = new UserView({
+          model: userModel
+        });
+        console.log("newplaylistview's collection: ", self.collection);
+        newSoundCloudView = new SoundCloudView({playlistURL: playlistURL});
 
-      newNamedPlaylistsView = new NamedPlaylistsView();
-      newUserView.render(user);
-      newSoundCloudView.render();
-      newNamedPlaylistsView.render();
-      $("#app").append(newUserView.$el);
-      $("#soundcloudPlayer").append(newSoundCloudView.$el);
-      $("#lists").append(newNamedPlaylistsView.$el);
-      // this.loadPlaylist();
+        newNamedPlaylistsView = new NamedPlaylistsView({collection: self.collection});
+        newUserView.render(user);
+        newSoundCloudView.render();
+        newNamedPlaylistsView.render();
+        $("#app").append(newUserView.$el);
+        $("#soundcloudPlayer").append(newSoundCloudView.$el);
+        $("#lists").append(newNamedPlaylistsView.$el);
+        // this.loadPlaylist();
       });
 
 
@@ -133,6 +137,7 @@ var GUI = (function() { //IIFE for all Views
     // },
 
     render: function() {
+      console.log('nplv render: ', this.collection)
       label = '<h2>Bands from where?</h2>';
       console.log("NamedPlaylistView render is listening");
       // this.$el.html(label);
@@ -145,9 +150,21 @@ var GUI = (function() { //IIFE for all Views
 
 
     initialize: function() {
+      var self = this;
+      this.collection = new Posts();
+      var route = '/posts/' + user
 
+      $.get(
+        route
+      , function(data) {
+        data = JSON.parse(data);
+         for (var i = 0; i < data.length; i++) {
+           self.collection.add(data[i])
+         }
+         console.log(data)
+      })
     }
-  });
+});
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -212,9 +229,11 @@ var GUI = (function() { //IIFE for all Views
         $('#currentPlaylist').val('');
         GUI.NamedPlaylistsView.collection.fetch();
     });
-      var newNamedPlaylistsView = new NamedPlaylistsView();
-      newNamedPlaylistsView.render();
-      $(saveTitle).append(newNamedPlaylistsView.$el);
+        // newNamedPlaylistsView.render();
+      // console.log("soundcloudview's collection: ", this.collection)
+      // var newNamedPlaylistsView = new NamedPlaylistsView({collection: this.collection});
+      // newNamedPlaylistsView.render();
+      // $(saveTitle).append(newNamedPlaylistsView.$el);
     }
   });
 
@@ -227,15 +246,49 @@ var GUI = (function() { //IIFE for all Views
 
   var NamedPlaylistsView = Backbone.View.extend({
     className: 'lists',
+    events: {
+      'update this.collection': 'render'
+    },
     initialize: function() {
+      console.log('nplSv: ', this.collection)
          this.listenTo(this.collection, 'update', this.render);
+         console.log("newPlayListsView's collection", this.collection);
     },
 
     render: function() {
+      console.log(this.collection);
       label = '<h2>My Playlists</h2>';
       this.$el.html(label);
-      var titleContent = $('#currentPlaylist').html();
-      this.$el.html(titleContent);
+      this.collection.each(function(data) {
+        var postView = new ShowListsView({ model: data });
+        console.log(data);
+        this.$el.append(postView.render().$el);
+      },this);
+      return this;
+    }
+
+    
+
+  });
+
+
+ //////////////////////////////////////////////////////////////////////////////
+
+  ////NOTES FOR UserView
+  //This view holds all of the views
+  //This view also has the login and logout buttons
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  ShowListsView = Backbone.View.extend({
+    className: 'showlists',
+      render: function() {
+      this.listenTo(this.collection, 'update', this.render);
+      var titleContent = $('#title').html();
+      var urlContent = $('#url').html();
+      var title = '<h3 id="title">' + this.model.get('title') + '</h3>';
+      var url = '<h4 id="url">' + this.model.get('url') + '</h4>';
+      this.$el.html(title + "<div>" + url + "</div>");
       return this;
     }
 
