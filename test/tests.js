@@ -24,16 +24,7 @@ describe('NewPLaylistView', function() {
   it('should initialize method', function() {
     expect(newplaylistview).to.respondTo('initialize');
   });
-//   describe('clicking logout', function() {
-//     before(function() {
-//       sinon.stub(newplaylistview, 'logout');
-//       var $logout = newplaylistview.$('#logout');
-//       $logout.click();
-//     })
-//     it('returns to login page', function() {
-//       expect('/login'.callCount,1)
-//     });
-// });
+
   describe('selecting city', function () {
     var newplaylistview;
     before(function() {
@@ -61,5 +52,16 @@ describe('SoundCloudView', function() {
 });
 it('should initialize method', function() {
   expect(soundcloudview).to.respondTo('initialize');
-  })
-})
+});
+// describe('clicking logout', function() {
+//   var userview = new UserView;
+//     before(function() {
+//       sinon.stub(userview, 'logout');
+//       var $logout = userview.$('#logout');
+//       $logout.click();
+//     })
+//     it('returns to login page', function() {
+//       expect('/login'.callCount,1)
+//       });
+  //});
+});
