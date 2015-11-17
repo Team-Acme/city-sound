@@ -77,6 +77,7 @@ router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
     console.log('req.session: ', req.session)
     if (err) res.send(err);
+    res.redirect('/');
   })
 });
 
