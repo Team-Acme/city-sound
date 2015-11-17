@@ -9,7 +9,7 @@ var pwd = require('pwd');
 if(process.env.HEROKU===true){
   var db = orch(process.env.DBKEY)
 } else {
-  var db = orch(require('../config').dbkey)
+  var db = orch(require('../test/configtest').dbkey)
 }
 
 router.use(bodyParser.urlencoded({ extended: false }));
