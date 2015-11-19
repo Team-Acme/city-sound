@@ -86,21 +86,6 @@ router.post('/', requireSession, function(req, res, next) {
 
   ///////////////////////////////////////////////////////////////////////////////
 
-// router.get('/:id/edit', requireSession, function(req, res, next) {
-//   res.render('edit-user', { title: 'Edit User', stylesheet: '/stylesheets/register_edit.css' });
-// });
-
-// router.put('/:id/edit', requireSession, function(req, res, next) {
-//   db.put('bfh-users', req.params.id, {
-//     "username": req.body.username,
-//     "password": req.body.password
-//   }).then(function(result) {
-//     req.session.user = {"username": req.body.username,
-//     "password": req.body.password};
-//     console.log('Edited User');
-//     res.redirect('/posts/main');
-//   });
-// });
 
 
 module.exports = router;

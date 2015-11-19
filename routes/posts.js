@@ -36,19 +36,6 @@ router.get('/main', requireSession, function(req, res) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-// router.get('/newlist', function(req, res, next) {
-//   console.log("newlist");
-//   // db.list('bfh-curated').then(function(result) {
-//   //   var playlists = [];
-//   //   for (var i = 0; i < result.body.results.length; i++) {
-//   //     if (("#citiesList").val() === result.body.city){
-//   //     playlists.push(result.body.results[i].value)
-//   //    }
-//   //   }
-//   //   res.send(playlists);
-//   // })
-// res.send('something');
-// });
 
 router.get('/', requireSession, function(req, res, next) {
   console.log('req.body: ', req.body)
@@ -60,6 +47,7 @@ router.get('/', requireSession, function(req, res, next) {
     console.log('Posted');
   });
 });
+
 
 
 router.get('/:username', requireSession, function(req, res, next) {
