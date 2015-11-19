@@ -11,4 +11,5 @@ router.get('/logout', function(req, res, next) {
   res.render('main', { title: 'Bands From Here' });
 });
 
+
 module.exports = router;

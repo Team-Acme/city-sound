@@ -25,7 +25,6 @@ console.log("models.js is loading");
     }
   });
 
-
   var UsersPosts = Backbone.Collection.extend({
     model: PostModel,
     url:'/posts/' + user,
