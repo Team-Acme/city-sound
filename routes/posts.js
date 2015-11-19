@@ -1,10 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var config = require('../config');
+//var config = require('../config');
 var orch = require('orchestrate');
-var db = orch(config.dbkey);
+//var db = orch(config.dbkey);
 var router = express.Router();
 var pwd = require('pwd');
+
+if(process.env.HEROKU===true){
+  var db = orch(process.env.DBKEY)
+} else {
+  var db = orch(require('../config').dbkey)
+}
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -29,6 +35,19 @@ router.get('/main', requireSession, function(req, res) {
 //The db is being searched to see if
 
 ///////////////////////////////////////////////////////////////////////////////
+
+
+router.get('/', requireSession, function(req, res, next) {
+  console.log('req.body: ', req.body)
+  db.get('bfh-playlists', {
+    "title": req.body.title,
+    "author": req.body.author,
+    "url": this.options.playlistURL
+  }).then(function(result) {
+    console.log('Posted');
+  });
+});
+
 
 
 router.get('/:username', requireSession, function(req, res, next) {

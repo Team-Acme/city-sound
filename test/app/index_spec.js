@@ -68,6 +68,7 @@ function removeTestUser (username, callback) {
   db.search('bfh-users', 'value.username: ' + username)
   .then(function (result) {
     var key = result.body.results[0].path.key;
+    console.log(result.body.results);
     db.remove('bfh-users', key)
     .then(function () { callback(); })
     .fail(callback);

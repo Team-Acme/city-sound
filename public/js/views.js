@@ -18,6 +18,9 @@ var appAppear;
 var ShowListsView
 var cityName;
 
+var logout;
+
+
 //STOP DELETING STUFF
 var GUI = (function() { //IIFE for all Views
 
@@ -255,6 +258,7 @@ var GUI = (function() { //IIFE for all Views
 
   });
 
+
   //////////////////////////////////////////////////////////////////////////////
 
   ////NOTES FOR UserView
@@ -269,10 +273,10 @@ var GUI = (function() { //IIFE for all Views
       this.listenTo(this.collection, 'update', this.render);
       var titleContent = $('#title').html();
       var urlContent = $('#url').html();
-
       var title = '<h3 id="title">' + this.model.get('title') + '</h3>';  
       var playlistPlayer =  tracksPlayer = '<iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + this.model.get('url') + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'    
       var url = '<h4 id="url">' + playlistPlayer + '</h4>';      
+
       // var url = '<h4 id="url">' + '<a href="#">' + this.model.get('url') + '</a>' + '</h4>';
       this.$el.html(title + "<div>" + url + "</div>");
       return this;
@@ -329,7 +333,8 @@ var GUI = (function() { //IIFE for all Views
   $(function() {
     var $el = $('#logout');
 
-    var logout = function() {
+
+    logout = function() {
       console.log('get out of my stuff!')
         $.get('/logout', function(data) {
           // window.location = '/';

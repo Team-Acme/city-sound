@@ -21,7 +21,7 @@ console.log("models.js is loading");
     model: PostModel,
     url:'/posts/',
     initialize: function (){
-      this.fetch();
+      // this.fetch();
     }
   });
 
