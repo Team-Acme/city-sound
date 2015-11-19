@@ -1,4 +1,3 @@
-
 //GLOBAL VARIABLES FOR TESTING
 var Backbone;
 var WidgetView;
@@ -19,8 +18,6 @@ var appAppear;
 var ShowListsView
 var cityName;
 
-
-
 //STOP DELETING STUFF
 var GUI = (function() { //IIFE for all Views
 
@@ -34,7 +31,7 @@ var GUI = (function() { //IIFE for all Views
   WidgetView = Backbone.View.extend({
     className: 'widgetContainer',
     render: function() {
-    var widget = '<div id="widget"></div>';
+      var widget = '<div id="widget"></div>';
       this.$el.html('<b>' + widget + " " + '<br></br>');
 
     },
@@ -48,7 +45,6 @@ var GUI = (function() { //IIFE for all Views
     }
   });
 
-
   //////////////////////////////////////////////////////////////////////////////
 
   //NOTES FOR NewPLaylistView:
@@ -56,7 +52,7 @@ var GUI = (function() { //IIFE for all Views
 
   //////////////////////////////////////////////////////////////////////////////
 
-    NewPLaylistView = Backbone.View.extend({
+  NewPLaylistView = Backbone.View.extend({
     className: 'newPlaylist',
     initialize: function() {
       this.listenTo(app.tracks, 'change', this.render);
@@ -65,10 +61,10 @@ var GUI = (function() { //IIFE for all Views
     events: {
       "change #citiesList": "appAppear",
       "update this.collection": 'render'
-      // "click #logout": "logout"
+        // "click #logout": "logout"
     },
 
-      loadPlaylist: function() {
+    loadPlaylist: function() {
       // console.log("this is the city " + cityName.val());
       var cityPlaylists = [];
       // var selectedPlaylist = this.options.playlistURL;
@@ -76,9 +72,8 @@ var GUI = (function() { //IIFE for all Views
       // add to cityPlaylists array
       // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
 
-
       SC.oEmbed(selectedPlaylist, {
-          element: document.getElementById('playerGoesHere')
+        element: document.getElementById('playerGoesHere')
       });
     },
 
@@ -90,16 +85,17 @@ var GUI = (function() { //IIFE for all Views
       var thisCity = $("#citiesList").val();
       // var playlistURL;
       //post request to sessions.js for city playlist URL
-      $.post("/newlist", {city: thisCity}, function(data, status){
+      $.post("/newlist", {
+        city: thisCity
+      }, function(data, status) {
 
-      console.log("status: " + status);
-      console.log("response: ", data.viewResponse);
-      var randPlaylist = data.viewResponse[Math.floor(Math.random() * data.viewResponse.length)];
-      playlistURL = randPlaylist.playlistID; //data.viewResponse.playlistID;
-      console.log('playlistURL: ', playlistURL);
+        console.log("status: " + status);
+        console.log("response: ", data.viewResponse);
+        var randPlaylist = data.viewResponse[Math.floor(Math.random() * data.viewResponse.length)];
+        playlistURL = randPlaylist.playlistID; //data.viewResponse.playlistID;
+        console.log('playlistURL: ', playlistURL);
 
-
-      }).done(function(data){
+      }).done(function(data) {
         var saved = $("#saveCity").val();
         app.currentUser = saved;
         // userModel = app.users.findWhere({username: user});
@@ -107,9 +103,14 @@ var GUI = (function() { //IIFE for all Views
           model: userModel
         });
         console.log("newplaylistview's collection: ", self.collection);
-        newSoundCloudView = new SoundCloudView({playlistURL: playlistURL});
+        newSoundCloudView = new SoundCloudView({
+          playlistURL: playlistURL,
+          collection: self.collection
+        });
 
-        newNamedPlaylistsView = new NamedPlaylistsView({collection: self.collection});
+        newNamedPlaylistsView = new NamedPlaylistsView({
+          collection: self.collection
+        });
         newUserView.render(user);
         newSoundCloudView.render();
         newNamedPlaylistsView.render();
@@ -119,25 +120,9 @@ var GUI = (function() { //IIFE for all Views
         // this.loadPlaylist();
       });
 
-
       //---------------------------------------------------------
 
-
     },
-
-    // loadPlaylist: function() {
-    //   // console.log("this is the city" + $("#citiesList").val());
-    //   // var cityPlaylists = [];
-    //   // var selectedPlaylist = '';
-    //   // // get playlists from bfh-curated.URL using cityName.val() as a parameter
-    //   // // add to cityPlaylists array
-    //   // // find length of cityPlaylists and randomly choose one and save to selectedPlaylist
-
-
-    //   SC.oEmbed(selectedPlaylist, {
-    //       element: document.getElementById('playlistURL')
-    //   });
-    // },
 
     render: function() {
       console.log('nplv render: ', this.collection)
@@ -151,23 +136,22 @@ var GUI = (function() { //IIFE for all Views
       this.$el.html(label + cityName + closeDiv);
     },
 
-
     initialize: function() {
       var self = this;
       this.collection = new Posts();
       var route = '/posts/' + user
 
       $.get(
-        route
-      , function(data) {
-        data = JSON.parse(data);
-         for (var i = 0; i < data.length; i++) {
-           self.collection.add(data[i])
-         }
-         console.log(data)
-      })
+        route,
+        function(data) {
+          data = JSON.parse(data);
+          for (var i = 0; i < data.length; i++) {
+            self.collection.add(data[i])
+          }
+          console.log(data)
+        })
     }
-});
+  });
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -182,26 +166,23 @@ var GUI = (function() { //IIFE for all Views
 
     initialize: function(options) {
       this.options = options;
-      // console.log('171:');
-      // console.log(options);
       _.bindAll(this, ['render', "savePost"]);
     },
 
     testFunction: function() {
-      // console.log("SoundCloudView function is running");
+
     },
 
     render: function() {
       label = '<h2>Save Your Playlist</h2>';
-      // console.log(" SoundCloudView render is listening");
       this.$el.html(label);
       var playerDiv = '<div id="playerGoesHere"></div>'
       var saveCurrentPlaylist = '<input type="text" id="currentPlaylist">';
       var saveCurrentPlaylistBtn = '<button id="CurrentPlaylistBtn">save</button>';
       // this is the hard coded url that we have benn using: url=https%3A//api.soundcloud.com/playlists/78115793&amp;
-      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL +'&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
-      // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
-      // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
+      tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
+        // tracksPlayer = '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/'+ this.options.playlistURL + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
+        // tracksPlayer = '<iframe id="sc-widget" width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='+ this.options.playlistURL + ';color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;></iframe>';
       this.$el.html(playerDiv + tracksPlayer + label + '<b>' + "Playlist Title: " + saveCurrentPlaylist + saveCurrentPlaylistBtn);
       $("#userViewContainer").remove();
       $("#newPlaylist").remove();
@@ -216,27 +197,26 @@ var GUI = (function() { //IIFE for all Views
       'click #CurrentPlaylistBtn': 'savePost'
     },
 
-
-
     savePost: function() {
-      console.log("heard click on save in savePost");
+
       var saveTitle = $('#currentPlaylist').val();
-      console.log("savepost " + this.options.playlistURL);
-      $.post("/savelist", {
+
+      this.collection.add({
           title: $('#currentPlaylist').val(),
           author: user,
+          url: this.options.playlistURL
+        })
+        //   $.post("/savelist", {
+        //       title: $('#currentPlaylist').val(),
+        //       author: user,
+        //       url: this.options.playlistURL}, function(data, status){
+        //     console.log("status: " + status);
 
-          url: this.options.playlistURL}, function(data, status){
-        console.log("status: " + status);
+      //     $('#currentPlaylist').val('');
+      //     GUI.NamedPlaylistsView.collection.fetch();
+      //     // ({collection: self.collection});
 
-        $('#currentPlaylist').val('');
-        GUI.NamedPlaylistsView.collection.fetch();
-    });
-        // newNamedPlaylistsView.render();
-      // console.log("soundcloudview's collection: ", this.collection)
-      // var newNamedPlaylistsView = new NamedPlaylistsView({collection: this.collection});
-      // newNamedPlaylistsView.render();
-      // $(saveTitle).append(newNamedPlaylistsView.$el);
+      // });
     }
   });
 
@@ -249,13 +229,13 @@ var GUI = (function() { //IIFE for all Views
 
   var NamedPlaylistsView = Backbone.View.extend({
     className: 'lists',
-    events: {
-      'update this.collection': 'render'
-    },
+    id: 'lists',
+    events: {},
     initialize: function() {
+      var self = this;
       console.log('nplSv: ', this.collection)
-         this.listenTo(this.collection, 'update', this.render);
-         console.log("newPlayListsView's collection", this.collection);
+      this.listenTo(this.collection, 'update', self.render);
+      console.log("newPlayListsView's collection", this.collection);
     },
 
     render: function() {
@@ -263,19 +243,20 @@ var GUI = (function() { //IIFE for all Views
       label = '<h2>My Playlists</h2>';
       this.$el.html(label);
       this.collection.each(function(data) {
-        var postView = new ShowListsView({ model: data });
+        var postView = new ShowListsView({
+          model: data
+        });
         console.log(data);
         this.$el.append(postView.render().$el);
-      },this);
+      }, this);
       return this;
     }
 
-    
+
 
   });
 
-
- //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   ////NOTES FOR UserView
   //This view holds all of the views
@@ -285,15 +266,23 @@ var GUI = (function() { //IIFE for all Views
 
   ShowListsView = Backbone.View.extend({
     className: 'showlists',
-      render: function() {
+    render: function() {
       this.listenTo(this.collection, 'update', this.render);
       var titleContent = $('#title').html();
       var urlContent = $('#url').html();
-      var title = '<h3 id="title">' + this.model.get('title') + '</h3>';
-      var url = '<h4 id="url">' + this.model.get('url') + '</h4>';
+
+      var title = '<h3 id="title">' + this.model.get('title') + '</h3>';  
+      var playlistPlayer =  tracksPlayer = '<iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/' + this.model.get('url') + '&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'    
+      var url = '<h4 id="url">' + playlistPlayer + '</h4>';      
+      // var url = '<h4 id="url">' + '<a href="#">' + this.model.get('url') + '</a>' + '</h4>';
       this.$el.html(title + "<div>" + url + "</div>");
       return this;
-    }
+    },
+
+    initialize: function() {
+      this.listenTo(this.collection, 'update', this.render);
+
+    },
 
   });
 
@@ -336,31 +325,22 @@ var GUI = (function() { //IIFE for all Views
 
     },
 
-    // events: {
-    //   "click #logout": "logout"
-    // }
-
-
   });
 
-$( function() {
-  var $el = $('#logout');
-    console.log($el)
-  var logout = function(){
-    console.log('heard click on logout');
-    $.get({
-      url: '/logout'
-      }).done(function(data){
-        window.location = '/';
-        console.log('Successfully Logged Out');
+  $(function() {
+    var $el = $('#logout');
+
+    var logout = function() {
+      console.log('get out of my stuff!')
+        $.get('/logout', function(data) {
+          // window.location = '/';
       });
-    };
-  if ($el){
-    $el.click(logout);
-  } else {
-    console.log('failing quietly')
-  };
-});
+    }
+
+    if ($el) {
+      $el.click(logout);
+    } else {};
+  });
 
 
   // generic ctor to represent interface:
@@ -369,7 +349,6 @@ $( function() {
     firstView.render();
     $("#app").append(firstView.$el);
   }
-
 
   return GUI;
 }());

@@ -1,10 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var config = require('../config');
+// var config = require('../config');
 var orch = require('orchestrate');
-var db = orch(config.dbkey);
+// var db = orch(config.dbkey);
 var router = express.Router();
 var pwd = require('pwd');
+
+if(process.env.HEROKU===true){
+  var db = orch(process.env.DBKEY)
+} else {
+  var db = orch(require('../config').dbkey)
+}
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -69,7 +75,9 @@ router.post('/', function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
+    console.log('req.session: ', req.session)
     if (err) res.send(err);
+    res.redirect('/');
   })
 });
 
