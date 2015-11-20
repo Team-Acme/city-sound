@@ -46,7 +46,6 @@ app.use('/', sessionRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -94,7 +93,5 @@ app.use(function(err, req, res, next) {
 
 //   next();
 // });
-
-
 
 module.exports = app;
