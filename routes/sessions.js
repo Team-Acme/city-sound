@@ -1,22 +1,23 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-// var config = require('../config');
+var config = require('../config');
 var orch = require('orchestrate');
-// var db = orch(config.dbkey);
+var db = orch(config.dbkey);
 var router = express.Router();
 var pwd = require('pwd');
 
-if(process.env.HEROKU===true){
-  var db = orch(process.env.DBKEY)
+if (process.env.HEROKU === true) {
+  var dbase = orch(process.env.DBKEY)
 } else {
 
-  var db = orch(require('../config').dbkey)
+  var dbase = orch(require('../config').dbkey)
 
 }
 
-router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.urlencoded({
+  extended: false
+}));
 router.use(bodyParser.json());
-
 
 function loggedIn(req, res, next) {
   if (req.session.user) {
@@ -44,18 +45,20 @@ function requireSession(req, res, next) {
 ///////////////////////////////////////////////////////////////////////////////
 
 router.get('/', loggedIn, function(req, res, next) {
-  res.render('login', { stylesheet: '/stylesheets/login.css' });
+  res.render('login', {
+    stylesheet: '/stylesheets/login.css'
+  });
 });
 
 router.post('/', function(req, res, next) {
-  db.search('bfh-users', 'value.username: ' + req.body.username).then(function (result) {
+  db.search('bfh-users', 'value.username: ' + req.body.username).then(function(result) {
     console.log("user found");
     console.log(req.body.username);
     console.log(result.body.results);
     var storedhash = result.body.results[0].value.password;
     var salt = result.body.results[0].value.salt;
-    pwd.hash(req.body.password, salt, function(err, hash){
-      if (err){
+    pwd.hash(req.body.password, salt, function(err, hash) {
+      if (err) {
         console.log(err);
       }
       if (storedhash === hash) {
@@ -66,14 +69,16 @@ router.post('/', function(req, res, next) {
         //res.render('main', { user: req.session.user, stylesheet: '/stylesheets/bootstrap.min.css' });
       } else {
         console.log('Username or password incorrect');
-        res.render('login', { stylesheet: '/stylesheets/login.css' });
+        res.render('login', {
+          stylesheet: '/stylesheets/login.css'
+        });
       }
     })
   }).fail(function(err) {
     console.log(err);
     res.redirect('/');
   })
-  });
+});
 
 router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
@@ -84,6 +89,7 @@ router.get('/logout', function(req, res) {
 });
 
 //------------------------------------------------
+
 router.post('/newlist', function(req, res, next) {
 
   //City name from data sent from client
@@ -100,15 +106,21 @@ router.post('/newlist', function(req, res, next) {
         console.log(viewResponse);
         res.send({viewResponse: viewResponse});
 
-  })
-  // console.log('viewResponse', viewResponse);
-});
 
+    }).fail(function(err) {
+    res.send(err);
+  })
+
+    .then(function (viewResponse) {
+      res.json({ viewResponse: viewResponse });
+    });
+    // console.log('viewResponse', viewResponse);
+});
 
 //---------------------------------------------------
 
 router.post('/savelist', requireSession, function(req, res, next) {
-   console.log("heard /savelist on the router");
+  console.log("heard /savelist on the router");
   db.post('bfh-playlists', {
     "title": req.body.title,
     "author": req.body.author,
@@ -117,10 +129,5 @@ router.post('/savelist', requireSession, function(req, res, next) {
     console.log('Posted');
   });
 });
-
-
-
-
-
 
 module.exports = router;
